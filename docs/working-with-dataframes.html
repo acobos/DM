@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="index.html"/>
-
+<link rel="next" href="working-with-variables.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -54,6 +54,9 @@
 <script src="libs/font-awesome-5.13.0/js/script.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -163,6 +166,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#resources"><i class="fa fa-check"></i>Resources</a></li>
 <li class="chapter" data-level="" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>2</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#strings"><i class="fa fa-check"></i><b>2.1</b> Strings</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#whitespaces-and-capitalization"><i class="fa fa-check"></i><b>2.1.1</b> Whitespaces and capitalization</a></li>
+<li class="chapter" data-level="2.1.2" data-path="working-with-variables.html"><a href="working-with-variables.html#matching-locating-and-replacing-patterns"><i class="fa fa-check"></i><b>2.1.2</b> Matching, locating and replacing patterns</a></li>
+<li class="chapter" data-level="2.1.3" data-path="working-with-variables.html"><a href="working-with-variables.html#regular-expressions"><i class="fa fa-check"></i><b>2.1.3</b> Regular expressions</a></li>
+<li class="chapter" data-level="2.1.4" data-path="working-with-variables.html"><a href="working-with-variables.html#subsetting-strings"><i class="fa fa-check"></i><b>2.1.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="2.1.5" data-path="working-with-variables.html"><a href="working-with-variables.html#other-useful-functions"><i class="fa fa-check"></i><b>2.1.5</b> Other useful functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#factors"><i class="fa fa-check"></i><b>2.2</b> Factors</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#reordering-levels"><i class="fa fa-check"></i><b>2.2.1</b> Reordering levels</a></li>
+<li class="chapter" data-level="2.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#modifying-levels"><i class="fa fa-check"></i><b>2.2.2</b> Modifying levels</a></li>
+<li class="chapter" data-level="2.2.3" data-path="working-with-variables.html"><a href="working-with-variables.html#ordered-factors"><i class="fa fa-check"></i><b>2.2.3</b> Ordered factors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="working-with-variables.html"><a href="working-with-variables.html#dates"><i class="fa fa-check"></i><b>2.3</b> Dates</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#data-structures-for-date-and-date-time-values"><i class="fa fa-check"></i><b>2.3.1</b> Data structures for date and date-time values</a></li>
+<li class="chapter" data-level="2.3.2" data-path="working-with-variables.html"><a href="working-with-variables.html#date-and-date-time-formats"><i class="fa fa-check"></i><b>2.3.2</b> Date and date-time formats</a></li>
+<li class="chapter" data-level="2.3.3" data-path="working-with-variables.html"><a href="working-with-variables.html#reading-dates"><i class="fa fa-check"></i><b>2.3.3</b> Reading dates</a></li>
+<li class="chapter" data-level="2.3.4" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-date-components"><i class="fa fa-check"></i><b>2.3.4</b> Getting date components</a></li>
+<li class="chapter" data-level="2.3.5" data-path="working-with-variables.html"><a href="working-with-variables.html#a-closer-look-to-dates"><i class="fa fa-check"></i><b>2.3.5</b> A closer look to dates</a></li>
+<li class="chapter" data-level="2.3.6" data-path="working-with-variables.html"><a href="working-with-variables.html#shifting-dates"><i class="fa fa-check"></i><b>2.3.6</b> Shifting dates</a></li>
+<li class="chapter" data-level="2.3.7" data-path="working-with-variables.html"><a href="working-with-variables.html#intervals"><i class="fa fa-check"></i><b>2.3.7</b> Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="working-with-variables.html"><a href="working-with-variables.html#dataframe-variables"><i class="fa fa-check"></i><b>2.4</b> Dataframe variables</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="working-with-variables.html"><a href="working-with-variables.html#processing-several-variables-at-once"><i class="fa fa-check"></i><b>2.4.1</b> Processing several variables at once</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#resources-1"><i class="fa fa-check"></i>Resources</a></li>
+<li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#exercises-1"><i class="fa fa-check"></i>Exercises</a></li>
 </ul></li>
 </ul>
 
@@ -2555,8 +2591,8 @@ NA
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="working-with-variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
