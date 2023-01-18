@@ -755,16 +755,16 @@ Levels: I &lt; II &lt; III &lt; IV</code></pre>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="working-with-variables.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">today</span>()        <span class="co"># today&#39;s date, a date value</span></span></code></pre></div>
 <pre><code>[1] &quot;2023-01-18&quot;</code></pre>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="working-with-variables.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>()          <span class="co"># current time, a date-time value</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 11:02:01 CET&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 11:06:23 CET&quot;</code></pre>
 <p><br />
 </p>
 <p>Note that the date-time value produced by <code>now()</code> specifies a timezone: <code>CET</code> (standing for Central European Time). By default, this will be your computer’s system timezone, but we can specify any timezone with argument <code>tz</code>, including <code>UTC</code> (corresponding to <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">Coordinated Universal Time</a>:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="working-with-variables.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;WET&quot;</span>)                  <span class="co"># Western European Time (e.g., Canary Islands) </span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 10:02:01 WET&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 10:06:24 WET&quot;</code></pre>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="working-with-variables.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;Pacific/Auckland&quot;</span>)     <span class="co"># City of New Zealand</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 23:02:01 NZDT&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 23:06:24 NZDT&quot;</code></pre>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="working-with-variables.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>)                  <span class="co"># Coordinated Universal Time</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 10:02:01 UTC&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 10:06:24 UTC&quot;</code></pre>
 <p><br />
 </p>
 <p>Using <code>class()</code> we can see what are the types of objects used to store dates and date-times in R:</p>
@@ -853,7 +853,7 @@ Levels: I &lt; II &lt; III &lt; IV</code></pre>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="working-with-variables.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(x, <span class="at">format =</span> <span class="st">&quot;%A %d %B %Y&quot;</span>) </span></code></pre></div>
 <pre><code>[1] &quot;Wednesday 18 January 2023&quot;</code></pre>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="working-with-variables.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(y, <span class="st">&quot;%d-%b-%Y, %T %Z&quot;</span>)</span></code></pre></div>
-<pre><code>[1] &quot;18-Jan-2023, 11:02:01 CET&quot;</code></pre>
+<pre><code>[1] &quot;18-Jan-2023, 11:06:24 CET&quot;</code></pre>
 <p><br />
 </p>
 <p>Similarly, we can read dates from character vectors expressing calendar dates in an specific notation, by specifying it in the <code>format</code> argument of <code>as.Date()</code>:</p>
