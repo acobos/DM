@@ -1,0 +1,920 @@
+# Working with dataframes
+
+```{r 1-setup, include = FALSE, eval = TRUE}
+rm(list = ls())
+knitr::opts_chunk$set(eval = TRUE, echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      error = TRUE,
+                      fig.align = 'center')
+```
+
+
+Dataframes are the most common object used to store data in R, and many data analysis functions expect a dataframe as input. Frequently however, dataframes will need to undergo certain transformations, so that they satisfy the structure required by analysis functions. These transformations may involve subsetting rows or columns, aggregating rows, reshaping or combining dataframes. Although base R includes operators and functions allowing to perfom these and other dataframe operations, packages `dplyr` and `tidyr` make them easier hand have some additional advantages, such as allowing to chain operations with the pipe operator (`%>%`). In this chapter, we will see how to perform all the above mentioned transformations in turn, using functions from the `dplyr` and `tidyr` packages. However, because these two packages are part of the [tidyverse](https://www.tidyverse.org/), you do not need to load them (provided you have loaded `tidyverse`!).
+
+```{r}
+library(tidyverse)
+```
+
+
+For illustrative purposes, we will use data from a random sample of 500 patients participating in the [DISEHTAE study](https://www.sciencedirect.com/science/article/abs/pii/S1889183709000828?via%3Dihub) on the diagnosis, follow-up and control of arterial hypertensin in Spain. This was a cross-sectional nationwide study, with external auditing performed in 7802 hypertensive subjects who had attended one of 107 primary care centers from 14 regions in Spain during 2003. Among other variables, blood pressure (BP) measurements documented in each patient's clinical record were collected for a maximum of six follow-up visits in a natural year. Table \@ref(tab:1-hta-vars) lists the variables contained in the data file.
+
+```{r 1-data-download, echo = FALSE}
+downloadthis::download_file(
+  path = "./data/hta.xlsx",
+  button_label = "Download the DISETHAE data",
+  button_type = "primary",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+\
+
+```{r 1-hta-vars, echo=FALSE}
+
+library(readxl)
+library(dplyr)
+library(kableExtra)
+read_excel("./data/hta.xlsx", sheet = "variables") %>%
+  mutate(coding = ifelse(is.na(coding)," ", coding)) %>% 
+  kbl(caption = "Variables in the dataset") %>% 
+  kable_classic( c("striped", "condensed"), full_width = F, font_size = 12, fixed_thead = T) %>% 
+  column_spec(1, bold=T, width = "8em") %>% 
+  column_spec(2, width = "25em") %>%
+  column_spec(3, width = "30em")  %>% 
+  row_spec(0, bold=T, background = "Lightgray") %>% 
+  row_spec(6, extra_css = "border-bottom: 1px solid;") %>% 
+  row_spec(18, extra_css = "border-bottom: 1px solid;") %>% 
+  row_spec(31, extra_css = "border-bottom: 1px solid;")  
+
+```
+
+\
+
+The following script reads the data with function `import()` from package `rio`. The argument `which` specifies the spreadsheet to be read (`data`), since the MS Excel file has more than one spreadsheet. The resulting dataframe is saved as `ah `:
+
+```{r 1-read-hta}
+
+ah <- rio::import("./data/hta.xlsx", which = "data")
+
+```
+
+## Subsetting dataframes
+
+Subsetting dataframes is a very common task. When a dataframe has many variables (columns), we may want to subset the variables needed for an analysis as outlined in table \@ref(tab:1-subset-vars). In other instances we may want to restrict our analysis to a particular subset of observations (rows), as depicted in table \@ref(tab:1-subset-cols). 
+
+```{r 1-subset-vars, echo=FALSE}
+
+my_colors <- RColorBrewer::brewer.pal(6, "Blues")[1:4]
+
+k <- data.frame(x1 = 1:4,
+                x2 = 1:4, 
+                x3 = 1:4,
+                x4 = 1:4,
+                x5 = 1:4)
+
+
+my_style <- function(df, tit=NULL, col_width="3em"){
+  df %>% 
+    knitr::kable(caption = tit, align = "c") %>% 
+    kable_styling(bootstrap_options = c("condensed"), full_width = F) %>% 
+    row_spec(0, background = "Lightgray", extra_css = "border-right:2px solid white;") %>% 
+    row_spec(0:nrow(df), extra_css = "border-top:2px solid white; border-bottom:2px solid white;") %>% column_spec(1:ncol(df), width = col_width, extra_css = "border-right:2px solid white;") 
+}
+
+left_tbl <- k %>% 
+  my_style() %>% 
+  column_spec(c(1,4), background = my_colors[1], color = my_colors[1]) %>% 
+  column_spec(c(2:3,5), background = my_colors[3], color = my_colors[3])  
+   
+right_tbl <- select(k, 2,3,5) %>% 
+  my_style() %>% 
+  column_spec(1:3, background = my_colors[3], color = my_colors[3])  
+    
+knitr::kables(caption = "Subset variables (columns)", list(left_tbl, right_tbl)) %>% 
+  kable_styling(position = "center", full_width = T)
+
+
+rm(left_tbl, right_tbl)
+
+```
+
+
+
+```{r 1-subset-cols, echo=FALSE}
+
+left_tbl <- k %>% 
+  my_style() %>% 
+  row_spec(c(1,4), background = my_colors[1], color = my_colors[1]) %>% 
+  row_spec(2:3, background = my_colors[3], color = my_colors[3])  
+   
+right_tbl <- slice(k, 2,3,5) %>%  
+  my_style() %>% 
+  row_spec(1:2, background = my_colors[3], color = my_colors[3])  
+    
+knitr::kables(caption = "Subset observations (rows)", list(left_tbl, right_tbl)) %>% 
+  kable_styling(position = "center", full_width = T) 
+
+rm(left_tbl, right_tbl, k)
+
+```
+
+
+
+### Subsetting variables (columns)
+
+The `select()` function in `dplyr` allows to select variables from a dataframe. The first argument to this function must be the dataframe we want to subset. After it, we may simply name the variables we want to retain. In the example below we chain the `head()` function with the pipe operator `%>%` to limit the output to the first 6 rows:
+
+```{r}
+select(ah, pid, region, age, sex) %>% 
+  head()
+```
+
+\
+
+The variables to select may be specified one by one, comma separated, as in the above example. A range of consecutive variables can be indicated using the colon (`:`). Also, we can use the minus sign `-` to indicate variables to _exclude_:  
+
+```{r}
+select(ah, pid, pid:sex, -data_xtract_dt) %>% 
+  head()          
+```
+
+\
+
+Some _helper functions_ are available to facilitate the subsetting based on the variable names, which is very handy if variables are named in a consistent way. In dataframe `ah`, all date variables are suffixed with the string "dt". Similarly, the name of all diagnostic variables is prefixed with "dx". 
+
+Suppose we want to select all variables containing the string "dx". This can be easily done with the helper function `contains()`:
+
+
+```{r contains}
+select(ah, contains("dx")) %>%              # all variables containing "dx"
+  head()                           
+```
+
+\
+
+Helper functions `starts_with()` and `ends_with()` allow to select variables preffixed or suffixed with the specified string. These are useful to select all diagnostic or all date variables, respectively:
+
+```{r}
+select(ah, starts_with("dx")) %>%                           # all diagnostic vars
+  head()                          
+
+select(ah, ends_with("dt")) %>%                             # all dates 
+  head()                           
+
+```
+ 
+\
+ 
+When some variables are measured more than once, it is common to number repetitions by suffixing a repetion number, as is the case of blood pressure measurements (`sbp_v1` to `sbp_v6` and `dbp_v1` to `dbp_v6`). The helper function `num_range()` allows to select variables so named, by indicating the constant part of the variable names as the first argument, and the numeric range of repetitions to select as the second argument:
+
+
+```{r}
+select(ah, num_range("sbp_v", 1:3))  %>%                    # SBP repetitions 1 to 3
+  head()                  
+select(ah, num_range("dbp_v", 2:5))  %>%                    # DBP repetitions 2 to 5
+  head()                  
+
+```
+
+\
+
+If the names of the variables to be selected are contained in a character vector, the helper function `one_of()` is handy:
+
+```{r}
+
+demovars <- c("pid", "age", "sex", "region")
+
+demo <- select(ah, one_of(demovars)) 
+
+head(demo)
+
+```
+
+
+### Subsetting observations (rows)
+
+The rows of a dataframe can be subsetted in several ways: by position (i.e., row number), at random, or according to some logical condition. 
+
+When working with dataframes having a very large number of observations, it is convenient to use a smaller subset to start programming the analysis, so that the execution doesn't take too long. Only when we have verified that the R code works well, we will run it on the whole dataframe. To this end, the `slice()` function is useful to select a _range_ of rows:
+
+```{r}
+slice(demo, 1:3)                                      # rows 1 to 3
+```
+
+\
+
+Functions `slice_min()` and `slice_max()` allow the selection of observartions having the highest or lowest values in a variable:
+
+```{r}
+slice_min(demo, age, n=3)                             # the 3 youngest cases
+slice_max(demo, age, n=5)                             # the 5 oldest cases
+```
+
+\
+
+If we want to take a random sample of observations, `sample_n()` allows to specify the size of the sample we want to draw from the dataframe. When using this (or any other function using the random number generator), we need to _set the seed_ if we want the result of the function to be reproducible (i.e, to give the same result every time we execute the code).  This will select five cases at random from dataframe `demo`:
+
+```{r}
+set.seed(1)                   # for reproducibility
+sample_n(demo, size = 5)      # actual sampling of 5 cases from demo
+```
+
+
+Last, observations may be selected based on a _logical condition_, that is, something that resolves to a logical value (`TRUE` or `FALSE`) for each row. Conditions are specified by means of _relational operators_ (`>`, `>=`, `<`, `<=`, `==`, and `!=`), and may be combined with _logical operators_ (`&`, `|`, `!`). The following example retains all females aged more than 65 (but then we use `head()` to limit the length of the output): 
+
+```{r}
+filter(demo, sex == 2 & age > 65) %>% head()
+```
+
+\
+
+The helper function `between()`is useful to specify ranges for numeric variables:
+
+```{r}
+filter(demo, sex == 2 & between(age, 40, 65)) %>% head()
+```
+
+\
+
+Also, functions resolving to a logical value can be used, for instance to select cases with missing values (here we do not use `head()` to limit the output, because the number of rows filtered in limited) ...
+
+```{r}
+filter(demo, is.na(sex)) 
+```
+
+\
+
+... or _not_ being missing :
+
+```{r}
+filter(demo, !is.na(sex)) %>% head()
+```
+
+
+
+\
+
+
+## Reshaping dataframes
+
+Given a set of data, there are always several possible ways to arrange them in a dataframe. Figure \@ref(tab:reshaping-schema) illustrates two different ways of arranging three variables (`var_1`, `var_2` and `var_3`) evaluated in three individuals (`id`). On the left arrangement, sometines called _wide_ format, each individual is a row and each variable is a column of the dataframe. On the right arrangement (called _long_ format), each individual takes one row _per variable_ and therefore three rows overall.
+
+```{r reshaping-schema, echo = FALSE}
+
+library(tidyr)
+
+k <- matrix(letters[1:9], nrow = 3, byrow = T) %>% as.data.frame() %>% 
+  add_rownames(var = "id") %>% 
+  rename(var_1 = V1, var_2 = V2, var_3 = V3)
+
+left_tbl <- k %>% 
+  my_style() %>% 
+  column_spec(1, bold = T, background = my_colors[1]) %>% 
+  column_spec(2, background = my_colors[2]) %>% 
+  column_spec(3, background = my_colors[3]) %>% 
+  column_spec(4, background = my_colors[4]) %>% 
+  add_header_above(c("wide format" = 4), align = "l")
+
+right_tbl <- k %>% 
+  pivot_longer(var_1:var_3, names_to = "variable") %>% 
+    my_style() %>%
+  row_spec(c(1,4,7), background = my_colors[2]) %>% 
+  row_spec(c(2,5,8), background = my_colors[3]) %>% 
+  row_spec(c(3,6,9), background = my_colors[4]) %>% 
+  column_spec(1, bold = T, background = my_colors[1]) %>% 
+  add_header_above(c("long format" = 3), align = "l")
+
+knitr::kables(caption = "Two ways to structure the same data", list(left_tbl, right_tbl)) %>% 
+  kable_styling(position = "center", full_width = F)
+
+rm(k, left_tbl, right_tbl)
+
+```
+
+\
+
+Each of these arrangements has its own advantages and shortcomings, and we will choose one or the other as convenient. For instance, the wide format may be required by some analysis functions, while a graphic function may require the long format. Therefore, it is crucial to know how to _reshape_ the data in a dataframe.
+
+The `tidyr` package has a couple of functions to reshape dataframes:
+
+- `pivot_long()`:  to convert a (wide) dataframe to long format
+
+- `pivot_wide()`:  tp convert a (long) dataframe to wide format
+
+To illustrate the use of these two functions, we select the patient identifier (`pid`) and all blood pressure measurements from dataframe `ah`, we save the resulting dataframe as `bp`, and we show its first six rows:
+
+
+```{r}
+bp_wide <- select(ah, pid, contains("bp")) 
+head(bp_wide)
+```
+
+
+### Wide to long
+
+To use the `pivot_longer()` function, we need to specify the dataframe we want to reshape as the first argument, and then indicate the variables we want to verticalize; this can be done by listing them comma separated, or by indicating a range of variables, as done below. In addition, we may optionally provide a name for the (new) variable that will contain the names of verticalized variables:
+
+```{r}
+
+pivot_longer(bp_wide, sbp_v1:dbp_v6, names_to = "variable") %>% 
+  head(15)
+
+```
+
+\
+
+Because not all patients had their blood pressure measured in all six visits, many rows in the resulting dataframe are useless (e.g., sbp_v3 to dbp_v6 for patient 11). These can be ommited using function `na.omit()`:
+
+
+```{r}
+
+bp_long <- pivot_longer(bp_wide, sbp_v1:dbp_v6, names_to = "variable") %>% 
+  na.omit() 
+
+bp_long
+```
+
+
+### Long to wide
+
+To use the `pivot_wider()` function, we need to specify the dataframe we want to reshape as the first argument, and then indicate the variables we want to horizontalize; this is done by identifying the _names_ and the _vaues_ of the variables to be horizontalized in arguments `names_from =` and `values_from = `, respectively:
+
+```{r}
+pivot_wider(bp_long, names_from = variable, values_from = value)
+```
+
+### Example
+
+Suppose we want to determine whether or not BP was controlled at each follow_up visit, defining BP control as SBP < 140 and DBP < 90. To work this out using `bp_wide`, a new "control" variable should be created for each `sbp_` `dbp_` pair, so that six new variables would be added to the dataframe, one for each of the six follow-up visits; Using `bp_long` is not an option, since SBP and DBP values for the same patient and visit are in different rows, and therefore the condition for control cannot be assessed, since it involves both SBP and DBP. 
+
+A better structure for BP data would be one having one row for each patient visit, and SBP and DBP values in the same row. The following produces a dataframe with such structure, starting with dataframe `ah`, and chaining the following operations:
+
+1. select all variables containing the string "bp" (i.e., all BP variables).
+
+2. convert to long format, storing variable names in new variable `variable`.
+
+3. discard rows with a missing value.
+
+4. use function `separate()` to split the contents of `variable` into two new variables: `measure` (taking values `sbp` or `dbp`), and `visit` (taking values `v1`, `v2, ..., `v6`).
+
+5. convert to wide format, so that SBP and DBP values are horizontalized.
+
+
+```{r}
+bp <- ah %>% 
+  select(pid, contains("bp")) %>% 
+  pivot_longer(sbp_v1:dbp_v6, names_to = "variable") %>% 
+  na.omit() %>% 
+  separate(variable, into = c("measure", "visit")) %>% 
+  pivot_wider(names_from = measure, values_from = value) 
+
+bp
+
+```
+
+
+This is possibly the most sensible structure to store BP data. Now it is very easy to compute the required variable informing on BP control:
+
+```{r}
+bp %>% 
+  mutate(bp_control = ifelse(sbp < 140 & dbp < 90, "yes", "no"))
+
+```
+
+
+
+## Summarising rows of a dataframe
+
+The `dplyr` package has a `summarise()` function that can be used to compute summaries of columns of a dataframe. The first argument to this function is a dataframe, and further arguments are used to define the summaries we want to compute. For each summary, a name must be provided, and an appropriate function used to compute the desired summary of a column. An example of use of this function follows:
+
+```{r}
+summarise(ah, 
+          min_of_age = min(age),    
+          max_of_age = max(age),
+          mean_of_age = mean(age),
+          number_of_cases = n())
+```
+
+\
+
+Even though this may prove useful in some cases, it is usually more practical to compute summary statistics with functions such as `summary()` in base R, or `favstats()`, and `tally()` in package `mosaic`. What makes `summarise()` really powerful is its use in conjunction with the `group_by()` function, to compute summaries in _groups_ of rows. 
+
+### Summaries in grouped data
+
+The idea of summarising groups of rows is illustrated in figure \@ref(tab:1-summarise-grouped). In this process, groups of rows having the same value in a grouping variable `g` are reduced to a single row containing  summary values for the group. These summary values are computed by applying an appropriate function to combine or operate values of the different rows in a group.
+
+```{r 1-summarise-grouped, echo = FALSE, fig.align='center', fig.width = 6, fig.cap="Summaries of grouped data"}
+
+row_colors <- RColorBrewer::brewer.pal(4, "Blues")
+
+k <- data.frame(g = rep(1:3, each=2),
+           x = LETTERS[1:6], 
+           y = 1:6 * 10) 
+
+k_summary <- k %>% 
+  group_by(g) %>% 
+  summarise(first_x = first(x),
+            pasted_x = paste(x, collapse = ", "),
+            mean_y = mean(y),
+            last_y = last(y)) 
+
+left_tbl <- k %>%
+  my_style() %>% 
+  row_spec(1:2, background = row_colors[1]) %>% 
+  row_spec(3:4, background = row_colors[2]) %>% 
+  row_spec(5:6, background = row_colors[3]) %>% 
+  add_header_above(c("grouped by g" = 3), align = "l")
+  
+right_tbl <- k_summary %>%
+  my_style() %>% 
+  row_spec(0, bold = T, background = "Lightgray") %>% 
+  row_spec(1, background = row_colors[1]) %>% 
+  row_spec(2, background = row_colors[2]) %>% 
+  row_spec(3, background = row_colors[3]) %>% 
+  add_header_above(c("summarised by g" = 5), align = "l")
+
+
+
+knitr::kables(caption = "Summarising grouped data", list(left_tbl, right_tbl)) %>% 
+  kable_styling(position = "center", full_width = F)
+
+rm(k, k_summary, left_tbl, right_tbl)
+```
+
+\
+
+For instance, consider the dataframe `bp` produced previously, having as many rows per patient as follow-up visits in which BP was measured (`sbp` and `dbp`). Suppose we want to compute the mean of all available BP measurements for each patient, as well as the number of such measurements. To do this, we need to:
+
+1. Group rows by patient (`pid`) with `group_by(pid)`, 
+
+2. Compute the required summaries with `summarise()`, providing a name for each, and
+
+3. Ungroup the dataframe with `ungroup()`.
+
+This is done by the following code:
+
+```{r}
+bp %>% 
+  group_by(pid) %>%                             # define the groups
+  summarise(mean_sbp = mean(sbp),               # computes the mean of sbp values
+            mean_dbp = mean(dbp),               # computes the mean of dbp values
+            measurements = n())  %>%            # comptes the number of assessments (rows)
+  ungroup()
+```
+
+\
+
+The resulting dataframe has only one row per patient (`pid`), and the summaries computed are the  remaining variables (`mean_sbp`, `mean_dbp`, and  `measurements`).
+
+In computing summaries of a variable, we can use _any_ function which is appropriate for the variable type. Variables `sbp` and `dbp` in `bp` are numeric variables, and we used the `mean()` function to compute their means for each patient. Other functions for numeric variables could have been used here, such as `min()`, `max()`, or `median()`. Similarly, character variables can be summarised using functions that are appropriate for characters. For example, consider the following dataframe containing the adverse events experienced by three patients:
+
+```{r }
+
+ae <- data.frame(pid = c(1,2,2,2,3,3),
+           adverse_event = c("Headache", "Nausea", "Vomiting", 
+                             "Abdominal cramps", "Hip fracture", "Anemia"))
+
+ae
+
+```
+
+\
+
+Suppose we want to produce a report, showing all events for each patient. The following code uses the `paste()`function with option `collapse = ` to write all events, as a single character value for each patient:
+
+
+```{r}
+ae %>% 
+  group_by(pid) %>%                                                
+  summarise(adverse_events = paste(adverse_event, collapse = ", ")) %>%        
+  ungroup()
+
+```
+
+
+### Example 1
+
+Suppose we want to compute how many anti-hypertensive drugs is taking each patient. The following script starts with dataframe `ah`, then selects the patient identified (`pid`) and the drug treatment variables (`bb` to `other`), then reshapes to a long format, and last changes values `2` to `0`. The resulting dataframe is saved as `drugs_long`for later use. 
+
+
+```{r}
+
+drugs_long <- ah %>% 
+  select(pid, bb:other) %>% 
+  pivot_longer(bb:other, names_to = "drug") %>%          # verticalize drugs
+  mutate(value = ifelse(value == 2, 0, value))           # recode values: 2 -> 0
+
+drugs_long
+
+```
+
+\
+
+Note that, for any patient and drug, `value` is `1` if the patient is taking the drug, and `0` otherwise. Therefore, for any particular patient, the sum of the `value`'s will be equal to the number of drugs the patient is taking. This can be computed with `summarise()` (using the `sum()` function) after grouping by patient:
+
+```{r}
+drugs_long %>% 
+  group_by(pid) %>%                                     # define groups by pid
+  summarise(number_of_drugs = sum(value)) %>%           # sumaries for each group
+  ungroup()                                             # undo the grouping
+
+```
+
+\
+
+In the previous example, we split the process in two steps to show the structure of the data after `pivot_longer()`, and the result of the `mutate()` statement used to recode the `value` `2` (corresponding to drugs not taken) to `0`. However, the whole process can be done in a single step, as shown below:
+
+```{r}
+ah %>% 
+  select(pid, bb:other) %>% 
+  pivot_longer(bb:other, names_to = "drug") %>%         # verticalize drugs
+  mutate(value = ifelse(value == 2, 0, value)) %>%      # recode values: 2 -> 0
+  group_by(pid) %>%                                    # define groups by pid
+  summarise(number_of_drugs = sum(value)) %>%           # sumaries for each group
+  ungroup()                                             # undo the grouping
+```
+
+
+### Example 2
+
+As a second example, suppose we want to pick the last available BP measurement for each patient. Starting with the `bp` dataframe created previously, we can summarise measurements for `sbp` and `dbp` using the `last()` function, which picks the last value in each group (i.e., in the last row of each group):
+
+```{r}
+bp %>% 
+  group_by(pid) %>% 
+  summarise(last_sbp = last(sbp),           # pick the last sbp for each patient
+            last_dbp = last(dbp)) %>%       # pick the last dbp for each patient
+  ungroup()
+
+```
+
+\
+
+Note that the resulting dataframe contains a single row per patient, and the variables have the names provided in the `summarise()` function call. 
+
+
+## Combining dataframes
+
+It is quite common to organise all the data collected in a clinical study in several dataframes, each having a relatively small number of thematically related variables. This is preferable to having a single dataframe packed with lots of variables. Moreover, different sets of variables may require a different tidy structure. For instance, demographic variables such as `region`, `age` and `sex`, are observed just once per patient, and therefore can be accomodated in a dataframe having one row per patient. However, blood presure values (`sbp` and `dbp`) may be observed at several visits, thus requiring several rows per patient (one for each visit) for an optimal, tidy structure.
+
+A better way to store the data in dataframe `ah` would be to split it in several dataframes, as suggested in table \@ref(tab:1-ah-dfs):
+
+```{r 1-ah-dfs, echo=FALSE}
+
+demo <- ah %>% select(pid:ah_dx_dt)
+
+risk_factors <- ah %>% select(pid, glucose:creatinine)
+
+treatments <- ah %>% select(pid, lmr:other)
+
+rm(ae, bp_long, drugs_long, demovars)
+
+rbind(c(dataframe = "demo", variables = names(demo) %>% paste(collapse = ", ")),
+      c(dataframe = "bp", variables = names(bp) %>% paste(collapse = ", ")),
+      c(dataframe = "risk_factors", variables = names(risk_factors) %>% paste(collapse = ", ")),
+      c(dataframe = "treatments", variables = names(treatments) %>% paste(collapse = ", "))) %>% as.data.frame %>% 
+  kbl(caption = "The DISEHTAE data distributed in four dataframes") %>% 
+  kable_classic( c("striped"), full_width = F, fixed_thead = T) %>% 
+  column_spec(1, bold=T, width = "8em") %>% 
+  row_spec(0, bold=T, background = "Lightgray") 
+
+```
+      
+\
+
+With the study data structured this way, the need of combining data from different dataframes will arise very soon. For instance, to compare the frequency of different treatments accoding to sex, dataframes `demo` and `treatments` should be combined. Of course, rows in both dataframes should be combined _by patient_, and this is why the `pid` variable should be present in all dataframes. 
+
+### Joins
+
+The operation of combining dataframes on (one or more) common _key_ variables (like `pid`) is called a _join_. Package `dplyr` includes several functions performing diferent type of joins, but all of them have a similar syntax: the first two arguments should be the dataframes to combine, and a further argument  `by = ` indicates the key variable(s) used to match rows. The functions differ in what they return when there are non-matching rows. The following figure illustrates the use of these functions and the result they produce:
+
+
+```{r echo=FALSE}
+a <- data.frame(x = 1:3, y = LETTERS[1:3])
+b <- data.frame(x = c(1:2,4), z = 10 * c(1:2,4))
+
+tbl_colors <- RColorBrewer::brewer.pal(2, "Blues")
+
+a_tbl <- a %>% 
+  my_style() %>% 
+  row_spec(0, bold = T, background = "Lightgray") %>% 
+  row_spec(1:3, background = tbl_colors[1]) %>% 
+  add_header_above(c("a" = 2), align = "l")
+  
+b_tbl <- b %>% 
+    my_style() %>% 
+  row_spec(0, bold = T, background = "Lightgray") %>% 
+  row_spec(1:3, background = tbl_colors[2])  %>% 
+  add_header_above(c("b" = 2), align = "l")
+
+knitr::kables(caption = "Joins of dataframes a and b", list(a_tbl, b_tbl)) %>% 
+  kable_styling(position = "center", full_width = T)
+
+
+make_nice <- function(kbl_obj) {
+  kbl_obj %>% 
+  kable_styling(bootstrap_options = c("condensed"), full_width = F) %>% 
+  column_spec(1:3, width = "4em") %>% 
+  row_spec(0, bold = T, background = "Lightgray") %>% 
+  column_spec(1:2, background = tbl_colors[1]) %>% 
+  column_spec(3, background = tbl_colors[2])
+}
+
+lj <- left_join(a, b, by = "x") %>% 
+  kbl(align = "c") %>% 
+  make_nice() %>% 
+  add_header_above(c('left_join(a, b, by = "x")' = 3), align = "l", font_size = 13)
+
+rj <- right_join(a, b, by = "x") %>% 
+  kbl(align = "c") %>% 
+  make_nice() %>% 
+  add_header_above(c('right_join(a, b, by = "x")' = 3), align = "l", font_size = 13)
+
+ij <- inner_join(a, b, by = "x") %>% 
+  kbl(align = "c") %>% 
+  make_nice() %>% 
+  add_header_above(c('inner_join(a, b, by = "x")' = 3), align = "l", font_size = 13)
+
+
+fj <- full_join(a, b, by = "x") %>% 
+  kbl(align = "c") %>% 
+  make_nice() %>% 
+  add_header_above(c('full_join(a, b, by = "x")' = 3), align = "l", font_size = 13)
+
+
+knitr::kables(list(lj, rj, ij, fj)) %>% 
+  kable_styling(position = "center", full_width = T)
+
+rm(list=(ls()[!ls() %in% c("ah", "demo", "bp", "risk_factors", "treatments")]))
+
+```
+
+In words:
+
+- `left_join(a, b, by ="x")`  returns all rows in `a` and matching rows in `b`.
+
+- `right_join(a, b, by ="x")`  returns all rows in `b` and matching rows in `a`.
+
+- `inner_join(a, b, by ="x")`  returns all matching rows.
+
+- `full_join(a, b, by ="x")`  returns all rows in `a` and `b`.
+
+\
+
+For example, this will combine data from `demo` and `treatments`. Because both dataframes have all 500 patients, all four types of join will produce the same result. To verify it we use the `dim()` function, which returns the dimension of a dataframe, that is, its number of rows and columns:
+
+```{r}
+left_join(demo, treatments, by = "pid") %>% dim()
+right_join(demo, treatments, by = "pid") %>% dim()
+inner_join(demo, treatments, by = "pid") %>% dim()
+full_join(demo, treatments, by = "pid") %>% dim()
+```
+
+All four joins above produced a dataframe with 500 rows and 14 variables.
+
+When the key variable has a different name in the two dataframes (e.g., `x1` and `x2`), the names should be specified as a character vector in the `by =` argument (e.g., `by = c("x1", "x2")`).
+
+When there is more than one matching variable, these should be specified as a vector. For example, suppose we had an additional dataframe `devices` specifying the BP measurement device used in every visit: `sphygmomanometer` or automatic BP measurement (`ABPM`). 
+
+```{r echo= FALSE}
+
+devices <- bp %>% 
+  select(pid, visit) %>% 
+  mutate(device = factor(rbinom(size=1, n = nrow(bp), p = .5),
+                         labels = c("sphygmomanometer", "ABPM")))
+
+devices
+
+```
+
+
+
+If we want to compare BP values among devices, we need to merge dataframes `bp` and `devices` by patient _and_ visit, so that in this case we have two key variables. The following script shows how to: 
+
+```{r}
+left_join(bp, devices, by = c("pid", "visit"))
+```
+
+
+\
+
+If the `by =` argument is omitted, variables having the same name in both dataframes will be used as keys for the matching. So, the following code produces the same result as before. Note the message issued informing on the key variables used to match rows. 
+
+```{r message = TRUE}
+left_join(bp, devices)
+```
+
+This should be used with caution to avoid undesired results that may occur if either some of the intended key variables have different names in both dataframes, or an unintended key has the same name in both dataframes.
+
+When there is more than one matching row in one of the dataframes, variables from the other dataframe will be repeated. For instance, `demo` has one row per patient, and `bp` has several rows per patient. If joined, values of variables from `demo` will be repeated for all matching rows in `bp`:
+
+```{r}
+left_join(demo, bp) %>% head()
+```
+
+A right-join is just the opposite of a left-join, so that `left_join(a, b, by = "x")` will produce the same result as `right_join(b, a, by = "x")`.
+
+The left_join of  `demo` and `bp` will have all patients in `demo`. However, not all these patients have a matching row in `bp`, and therefore `sbp` and `dbp` will be missing for some rows:
+
+```{r}
+lj <- left_join(demo, bp) 
+nrow(lj)
+colSums(is.na(lj))
+```
+
+We see that `lj` has `r nrow(lj)` rows, but 108 missings in both `sbp` and `dbp`.
+
+An inner join of `demo` and `bp` will not include these rows, since only matching rows are retained, but now there are no missings in `sbp` or `dbp`.
+
+```{r}
+ij <- inner_join(demo, bp) 
+nrow(ij)
+colSums(is.na(ij))
+```
+
+Last, a full join of `demo` and `bp` will include patients appearing in either dataframe, even if no matching row is found in the other:
+
+```{r}
+ij <- full_join(demo, bp) 
+nrow(ij)
+colSums(is.na(ij))
+```
+
+
+### Example 1: left- and right-joins
+
+Suppose we want to exclude from analysis those patients with unknown (missing) sex or date of diagnosis of arterial hypertension. These are the only variables having missing values in `demo`:
+
+```{r}
+colSums(is.na(demo))
+```
+
+\
+
+To get rid of cases with incomplete data, we can use function `na.omit()`, save the result as `demo_complete`, and see how many rows are left:
+
+```{r}
+demo_complete <- na.omit(demo)                 # remove rows with missing values
+nrow(demo_complete)                            # how many rows?
+```
+
+\
+
+The dataframe `demo_complete` has `r nrow(demo_complete)` rows. Now suppose we want to analyze treatments by sex. We need to merge `demo_complete` with `treatments`, so that only patients in the former are retained. 
+
+```{r}
+demo_treat <- left_join(demo_complete, treatments, by = "pid") 
+head(demo_treat)
+```
+
+\
+
+We see that the result includes all variables in both dataframes, but only rows in `demo_complete` (`r nrow(demo_complete)` rows):
+
+```{r}
+nrow(demo_treat)
+```
+
+
+
+
+Join functions can be chained just as any other function, and therefore the following code is equivalent to the previous one:
+
+```{r}
+demo_complete %>% 
+  left_join(treatments, by = "pid") %>% head()
+```
+
+\
+
+The advantage of chaining is that we can modify the first dataframe as needed, and then do the join. For instance, to keep the result as simple as possible, we may want to select only the needed variables in `demo_complete` before left-joining the resulting dataframe to `treatments`:
+
+```{r}
+demo_complete %>% 
+  select(pid, sex) %>%                           # to keep only needed variables
+  left_join(treatments, by = "pid") %>%            # left_join with treatments
+  head()
+```
+
+
+
+### Example 2: inner- and full-joins
+
+Suppose we want to analyse some patient summaries of BP measurements, such as the number of visits in which BP was monitored, and the mean BP values of all measurements of a patient. First we need to compute these summaries for each patient:
+
+
+```{r}
+bp_summaries <- bp %>% 
+  group_by(pid) %>% 
+  summarise(n_of_measurements = n(),
+            mean_sbp = mean(sbp),
+            mean_dbp = mean(dbp)) %>% 
+  ungroup()
+
+bp_summaries
+
+```
+
+\
+
+Now we should merge `demo_complete` and `bp_summaries`, but they have a different number of rows (`r nrow(demo_complete)` and `r nrow(bp_summaries)`, respectively): some patients are present in both dataframes, but some others are present in just one of them. An inner join will keep only patients that are present in both dataframes. Because neither `demo_complete` nor `bp_summaries` have missings, the resulting dataframe is free of missings:
+
+```{r}
+inner <- inner_join(demo_complete, bp_summaries)
+nrow(inner)
+colSums(is.na(inner))
+
+```
+
+However, a full join will include patients appearing in _any_ dataframe, and therefore, patients not appearing in one of them will have missings in variables comming from the other:
+
+```{r}
+full <- full_join(demo_complete, bp_summaries)
+nrow(full)
+colSums(is.na(full))
+```
+
+
+### Binding 
+
+Sometimes the data of a study is received in different batches, each batch including different patients. For instance, suppose the `ah` data was received in three data files containing different patients. Each of these files would be read, producing one dataframe each. To simulate this situation, the following code splits the `ah` dataframe in three parts, using the `slice()` function:
+
+```{r}
+batch_1 <- slice(ah, 1:200)
+batch_2 <- slice(ah, 201:400)
+batch_3 <- slice(ah, 401:500)
+```
+
+In such a case, the rows in each dataframe should be binded into a single dataframe. This can be done with function `bind_rows()`:
+
+```{r}
+batches_123 <- bind_rows(batch_1, batch_2, batch_3)
+nrow(batches_123)
+```
+
+The resulting dataframe `batches_123` has now all 500 rows. If some of the batches contained a variable not present in the remaining dataframes, this variable would be missing in rows coming from the later.
+
+An analogous function `bind_cols()` exists, allowing to bind the _columns_ of several dataframes. However, the binding is done by row position, not by value of a common key variable, which limits its usefulness.
+
+
+
+## Resources {-}
+
+- [Data transformation with dplyr](https://gauss.inf.um.es/tabular/www/data-transformation.pdf) and [Data wrangling](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) are two cheatsheets, very handy for a fast look-up of the main functions in packages `dplyr` and `tidyr`. 
+
+- Worried about understanding joins? See [these annimations!](https://github.com/gadenbuie/tidyexplain)
+
+- A complete catalog of [argument variations in dplyr::select()](https://www.r-bloggers.com/2015/07/the-complete-catalog-of-argument-variations-of-select-in-dplyr/).
+
+- A collection of lesser known but useful `dplyr`functions is presented [here](https://www.r-bloggers.com/2019/08/lesser-known-dplyr-functions/). 
+
+- A [tidyr tutorial](https://tidyr.tidyverse.org/) where you can learn about other useful functions in this package.
+
+- For complex recoding of variables, [this](https://www.sharpsightlabs.com/blog/case-when-r/) is a good explanation on how to use the `case_when()` function in `dplyr`, with examples. 
+
+- A comparison of `dplyr` funtions to their base R equivalents can be found [here](https://cran.r-project.org/web/packages/dplyr/vignettes/base.html).
+
+- If you work with really HUGE datasets you may want to know about the `data.table` package for more efficient dataframe operations. A comparison to of `data.table` and `dplyr` can be found [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/). 
+
+
+
+## Exercises  {-}
+
+1. Read the DISEHTAE data and create the four dataframes defined in table \@ref(tab:1-ah-dfs).
+
+1. Starting from dataframe `bp`, create a new dataframe `bp_monitoring`, with one row per patient and two variables: `pid` and `num_bpm`, the last one being the _number of blood pressure measurements_ (i.e., the number of visits in which BP was measured). 
+
+1. Starting from dataframe `treatments`, create a new dataframe `num_drugs` with one row per patient and two variables: `pid` and `num_drugs`, the last one being the _number of drugs_ a patient is taking.
+
+1. Compute the _number of cardiovascular risk factors_ for each patient (overweight defined as BMI of 25 kg/m^2 or more, diabtes mellitus, dyslipidemia, left venticular hypertrophy, current smoker), assuming that when a risk factor is missing, it is not present. Proceed as follows, starting from dataframe `ah`:
+    + select pid and relevant variables.
+    + use `mutate()` to create new variables `overweight` and `current_smoker`, as 1 (for yes) or 2 (for no).
+    + select `pid` and yes/no variables (coded as 1/2).   
+    + use `across()` in a `mutate()` statement to recode all yes/no variables so that they take values 1 (for yes) or 0 (for no).
+    + reshape to long format
+    + group the dataframe by patient and compute the sum of values for each patient.
+    + ungroup the dataframe.
+    + You should end up with a dataframe `num_risk_factors` having only two variables: `pid` and `num_cvrf` (number of cardiovascular risk factors). What is the distribution of `num_cvrf`? How many patients have none, one, two, three, four, or five risk factors?
+
+1. Using the ` %>% ` operator to chain operations, do the following:
+    + Starting with `demo`, combine it with `num_drugs`, so that only patients with complete demographic data appear in the result.
+    + Then combine the previous result with `num_cvrf`, so that only patients with complete demographic data appear in the result.
+    + Then combine the previous result with `bp_monitoring`, so that only patients with complete demographic data appear in the result. You should end up with a dataframe having the following variables: `pid`, `age`, `sex`, `num_drugs`, `num_cvrf` and `num_bpm`.
+
+2. The package `gapminder` includes a dataframe of the same name containing data on life expectancy by year and country of the world:
+
+    ```{r}
+    library(gapminder)
+    gapminder
+    ```
+
+    Using this dataframe, answer the following questions:
+
+    - What was the population of Europe in 2007?  
+    - What was the average life expectancy for European countries in 2007? and what were minimum and maximum life expectancy values in Europe?   
+    - Produce a graphic to see the evolution of the average life expectancy by continent from 1960 to 2000.  
+
+
