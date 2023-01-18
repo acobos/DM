@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="working-with-dataframes.html"/>
-
+<link rel="next" href="data-validation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -199,6 +199,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#resources-1"><i class="fa fa-check"></i>Resources</a></li>
 <li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#exercises-1"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>3</b> Data validation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-validation.html"><a href="data-validation.html#variable-types"><i class="fa fa-check"></i><b>3.1</b> Variable types</a></li>
+<li class="chapter" data-level="3.2" data-path="data-validation.html"><a href="data-validation.html#missings"><i class="fa fa-check"></i><b>3.2</b> Missings</a></li>
+<li class="chapter" data-level="3.3" data-path="data-validation.html"><a href="data-validation.html#ranges"><i class="fa fa-check"></i><b>3.3</b> Ranges</a></li>
+<li class="chapter" data-level="3.4" data-path="data-validation.html"><a href="data-validation.html#codelists"><i class="fa fa-check"></i><b>3.4</b> Codelists</a></li>
+<li class="chapter" data-level="3.5" data-path="data-validation.html"><a href="data-validation.html#uniqueness"><i class="fa fa-check"></i><b>3.5</b> Uniqueness</a></li>
+<li class="chapter" data-level="3.6" data-path="data-validation.html"><a href="data-validation.html#linear-sequences"><i class="fa fa-check"></i><b>3.6</b> Linear sequences</a></li>
+<li class="chapter" data-level="3.7" data-path="data-validation.html"><a href="data-validation.html#availability-of-records"><i class="fa fa-check"></i><b>3.7</b> Availability of records</a></li>
+<li class="chapter" data-level="3.8" data-path="data-validation.html"><a href="data-validation.html#multivariate-rules"><i class="fa fa-check"></i><b>3.8</b> Multivariate rules</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="data-validation.html"><a href="data-validation.html#inequalities"><i class="fa fa-check"></i><b>3.8.1</b> Inequalities</a></li>
+<li class="chapter" data-level="3.8.2" data-path="data-validation.html"><a href="data-validation.html#conditional-restrictions"><i class="fa fa-check"></i><b>3.8.2</b> Conditional restrictions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="data-validation.html"><a href="data-validation.html#rules-stored-in-files"><i class="fa fa-check"></i><b>3.9</b> Rules stored in files</a></li>
+<li class="chapter" data-level="3.10" data-path="data-validation.html"><a href="data-validation.html#working-with-validator-objects"><i class="fa fa-check"></i><b>3.10</b> Working with validator objects</a></li>
+<li class="chapter" data-level="3.11" data-path="data-validation.html"><a href="data-validation.html#designing-data-validation-plans-dvp"><i class="fa fa-check"></i><b>3.11</b> Designing data validation plans (DVP)</a></li>
+<li class="chapter" data-level="" data-path="data-validation.html"><a href="data-validation.html#resources-2"><i class="fa fa-check"></i>Resources</a></li>
+<li class="chapter" data-level="" data-path="data-validation.html"><a href="data-validation.html#exercises-2"><i class="fa fa-check"></i>Exercises</a></li>
 </ul></li>
 </ul>
 
@@ -735,16 +755,16 @@ Levels: I &lt; II &lt; III &lt; IV</code></pre>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="working-with-variables.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">today</span>()        <span class="co"># today&#39;s date, a date value</span></span></code></pre></div>
 <pre><code>[1] &quot;2023-01-18&quot;</code></pre>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="working-with-variables.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>()          <span class="co"># current time, a date-time value</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 10:59:59 CET&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 11:02:01 CET&quot;</code></pre>
 <p><br />
 </p>
 <p>Note that the date-time value produced by <code>now()</code> specifies a timezone: <code>CET</code> (standing for Central European Time). By default, this will be your computer’s system timezone, but we can specify any timezone with argument <code>tz</code>, including <code>UTC</code> (corresponding to <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">Coordinated Universal Time</a>:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="working-with-variables.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;WET&quot;</span>)                  <span class="co"># Western European Time (e.g., Canary Islands) </span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 09:59:59 WET&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 10:02:01 WET&quot;</code></pre>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="working-with-variables.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;Pacific/Auckland&quot;</span>)     <span class="co"># City of New Zealand</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 22:59:59 NZDT&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 23:02:01 NZDT&quot;</code></pre>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="working-with-variables.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>(<span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>)                  <span class="co"># Coordinated Universal Time</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-18 09:59:59 UTC&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-18 10:02:01 UTC&quot;</code></pre>
 <p><br />
 </p>
 <p>Using <code>class()</code> we can see what are the types of objects used to store dates and date-times in R:</p>
@@ -833,7 +853,7 @@ Levels: I &lt; II &lt; III &lt; IV</code></pre>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="working-with-variables.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(x, <span class="at">format =</span> <span class="st">&quot;%A %d %B %Y&quot;</span>) </span></code></pre></div>
 <pre><code>[1] &quot;Wednesday 18 January 2023&quot;</code></pre>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="working-with-variables.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(y, <span class="st">&quot;%d-%b-%Y, %T %Z&quot;</span>)</span></code></pre></div>
-<pre><code>[1] &quot;18-Jan-2023, 10:59:59 CET&quot;</code></pre>
+<pre><code>[1] &quot;18-Jan-2023, 11:02:01 CET&quot;</code></pre>
 <p><br />
 </p>
 <p>Similarly, we can read dates from character vectors expressing calendar dates in an specific notation, by specifying it in the <code>format</code> argument of <code>as.Date()</code>:</p>
@@ -1302,8 +1322,8 @@ Or equivalently, we may add this number of days to the origin and we will get th
           </div>
         </div>
       </div>
-<a href="working-with-dataframes.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="working-with-dataframes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

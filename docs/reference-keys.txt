@@ -7,6 +7,8 @@ tab:1-ah-dfs
 tab:unnamed-chunk-29
 tab:2-regex-meta-characters
 tab:2-strptime
+tab:3-validation-rules
+tab:3-dvp
 working-with-dataframes
 subsetting-dataframes
 subsetting-variables-columns
@@ -45,3 +47,17 @@ shifting-dates
 intervals
 dataframe-variables
 processing-several-variables-at-once
+data-validation
+variable-types
+missings
+ranges
+codelists
+uniqueness
+linear-sequences
+availability-of-records
+multivariate-rules
+inequalities
+conditional-restrictions
+rules-stored-in-files
+working-with-validator-objects
+designing-data-validation-plans-dvp

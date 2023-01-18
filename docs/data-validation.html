@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Data validation | Data Management for Clinical Researchers</title>
+  <meta name="description" content="3 Data validation | Data Management for Clinical Researchers" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Data validation | Data Management for Clinical Researchers" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Data validation | Data Management for Clinical Researchers" />
+  
+  
+  
+
+<meta name="author" content="Albert Cobos" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="working-with-variables.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/font-awesome-5.13.0/js/script.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html"><i class="fa fa-check"></i><b>1</b> Working with dataframes</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#subsetting-dataframes"><i class="fa fa-check"></i><b>1.1</b> Subsetting dataframes</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#subsetting-variables-columns"><i class="fa fa-check"></i><b>1.1.1</b> Subsetting variables (columns)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#subsetting-observations-rows"><i class="fa fa-check"></i><b>1.1.2</b> Subsetting observations (rows)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#reshaping-dataframes"><i class="fa fa-check"></i><b>1.2</b> Reshaping dataframes</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#wide-to-long"><i class="fa fa-check"></i><b>1.2.1</b> Wide to long</a></li>
+<li class="chapter" data-level="1.2.2" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#long-to-wide"><i class="fa fa-check"></i><b>1.2.2</b> Long to wide</a></li>
+<li class="chapter" data-level="1.2.3" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#example"><i class="fa fa-check"></i><b>1.2.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#summarising-rows-of-a-dataframe"><i class="fa fa-check"></i><b>1.3</b> Summarising rows of a dataframe</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#summaries-in-grouped-data"><i class="fa fa-check"></i><b>1.3.1</b> Summaries in grouped data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#example-1"><i class="fa fa-check"></i><b>1.3.2</b> Example 1</a></li>
+<li class="chapter" data-level="1.3.3" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#example-2"><i class="fa fa-check"></i><b>1.3.3</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#combining-dataframes"><i class="fa fa-check"></i><b>1.4</b> Combining dataframes</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#joins"><i class="fa fa-check"></i><b>1.4.1</b> Joins</a></li>
+<li class="chapter" data-level="1.4.2" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#example-1-left--and-right-joins"><i class="fa fa-check"></i><b>1.4.2</b> Example 1: left- and right-joins</a></li>
+<li class="chapter" data-level="1.4.3" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#example-2-inner--and-full-joins"><i class="fa fa-check"></i><b>1.4.3</b> Example 2: inner- and full-joins</a></li>
+<li class="chapter" data-level="1.4.4" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#binding"><i class="fa fa-check"></i><b>1.4.4</b> Binding</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#resources"><i class="fa fa-check"></i>Resources</a></li>
+<li class="chapter" data-level="" data-path="working-with-dataframes.html"><a href="working-with-dataframes.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>2</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#strings"><i class="fa fa-check"></i><b>2.1</b> Strings</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#whitespaces-and-capitalization"><i class="fa fa-check"></i><b>2.1.1</b> Whitespaces and capitalization</a></li>
+<li class="chapter" data-level="2.1.2" data-path="working-with-variables.html"><a href="working-with-variables.html#matching-locating-and-replacing-patterns"><i class="fa fa-check"></i><b>2.1.2</b> Matching, locating and replacing patterns</a></li>
+<li class="chapter" data-level="2.1.3" data-path="working-with-variables.html"><a href="working-with-variables.html#regular-expressions"><i class="fa fa-check"></i><b>2.1.3</b> Regular expressions</a></li>
+<li class="chapter" data-level="2.1.4" data-path="working-with-variables.html"><a href="working-with-variables.html#subsetting-strings"><i class="fa fa-check"></i><b>2.1.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="2.1.5" data-path="working-with-variables.html"><a href="working-with-variables.html#other-useful-functions"><i class="fa fa-check"></i><b>2.1.5</b> Other useful functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#factors"><i class="fa fa-check"></i><b>2.2</b> Factors</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#reordering-levels"><i class="fa fa-check"></i><b>2.2.1</b> Reordering levels</a></li>
+<li class="chapter" data-level="2.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#modifying-levels"><i class="fa fa-check"></i><b>2.2.2</b> Modifying levels</a></li>
+<li class="chapter" data-level="2.2.3" data-path="working-with-variables.html"><a href="working-with-variables.html#ordered-factors"><i class="fa fa-check"></i><b>2.2.3</b> Ordered factors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="working-with-variables.html"><a href="working-with-variables.html#dates"><i class="fa fa-check"></i><b>2.3</b> Dates</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#data-structures-for-date-and-date-time-values"><i class="fa fa-check"></i><b>2.3.1</b> Data structures for date and date-time values</a></li>
+<li class="chapter" data-level="2.3.2" data-path="working-with-variables.html"><a href="working-with-variables.html#date-and-date-time-formats"><i class="fa fa-check"></i><b>2.3.2</b> Date and date-time formats</a></li>
+<li class="chapter" data-level="2.3.3" data-path="working-with-variables.html"><a href="working-with-variables.html#reading-dates"><i class="fa fa-check"></i><b>2.3.3</b> Reading dates</a></li>
+<li class="chapter" data-level="2.3.4" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-date-components"><i class="fa fa-check"></i><b>2.3.4</b> Getting date components</a></li>
+<li class="chapter" data-level="2.3.5" data-path="working-with-variables.html"><a href="working-with-variables.html#a-closer-look-to-dates"><i class="fa fa-check"></i><b>2.3.5</b> A closer look to dates</a></li>
+<li class="chapter" data-level="2.3.6" data-path="working-with-variables.html"><a href="working-with-variables.html#shifting-dates"><i class="fa fa-check"></i><b>2.3.6</b> Shifting dates</a></li>
+<li class="chapter" data-level="2.3.7" data-path="working-with-variables.html"><a href="working-with-variables.html#intervals"><i class="fa fa-check"></i><b>2.3.7</b> Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="working-with-variables.html"><a href="working-with-variables.html#dataframe-variables"><i class="fa fa-check"></i><b>2.4</b> Dataframe variables</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="working-with-variables.html"><a href="working-with-variables.html#processing-several-variables-at-once"><i class="fa fa-check"></i><b>2.4.1</b> Processing several variables at once</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#resources-1"><i class="fa fa-check"></i>Resources</a></li>
+<li class="chapter" data-level="" data-path="working-with-variables.html"><a href="working-with-variables.html#exercises-1"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>3</b> Data validation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-validation.html"><a href="data-validation.html#variable-types"><i class="fa fa-check"></i><b>3.1</b> Variable types</a></li>
+<li class="chapter" data-level="3.2" data-path="data-validation.html"><a href="data-validation.html#missings"><i class="fa fa-check"></i><b>3.2</b> Missings</a></li>
+<li class="chapter" data-level="3.3" data-path="data-validation.html"><a href="data-validation.html#ranges"><i class="fa fa-check"></i><b>3.3</b> Ranges</a></li>
+<li class="chapter" data-level="3.4" data-path="data-validation.html"><a href="data-validation.html#codelists"><i class="fa fa-check"></i><b>3.4</b> Codelists</a></li>
+<li class="chapter" data-level="3.5" data-path="data-validation.html"><a href="data-validation.html#uniqueness"><i class="fa fa-check"></i><b>3.5</b> Uniqueness</a></li>
+<li class="chapter" data-level="3.6" data-path="data-validation.html"><a href="data-validation.html#linear-sequences"><i class="fa fa-check"></i><b>3.6</b> Linear sequences</a></li>
+<li class="chapter" data-level="3.7" data-path="data-validation.html"><a href="data-validation.html#availability-of-records"><i class="fa fa-check"></i><b>3.7</b> Availability of records</a></li>
+<li class="chapter" data-level="3.8" data-path="data-validation.html"><a href="data-validation.html#multivariate-rules"><i class="fa fa-check"></i><b>3.8</b> Multivariate rules</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="data-validation.html"><a href="data-validation.html#inequalities"><i class="fa fa-check"></i><b>3.8.1</b> Inequalities</a></li>
+<li class="chapter" data-level="3.8.2" data-path="data-validation.html"><a href="data-validation.html#conditional-restrictions"><i class="fa fa-check"></i><b>3.8.2</b> Conditional restrictions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="data-validation.html"><a href="data-validation.html#rules-stored-in-files"><i class="fa fa-check"></i><b>3.9</b> Rules stored in files</a></li>
+<li class="chapter" data-level="3.10" data-path="data-validation.html"><a href="data-validation.html#working-with-validator-objects"><i class="fa fa-check"></i><b>3.10</b> Working with validator objects</a></li>
+<li class="chapter" data-level="3.11" data-path="data-validation.html"><a href="data-validation.html#designing-data-validation-plans-dvp"><i class="fa fa-check"></i><b>3.11</b> Designing data validation plans (DVP)</a></li>
+<li class="chapter" data-level="" data-path="data-validation.html"><a href="data-validation.html#resources-2"><i class="fa fa-check"></i>Resources</a></li>
+<li class="chapter" data-level="" data-path="data-validation.html"><a href="data-validation.html#exercises-2"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Management for Clinical Researchers</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-validation" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Data validation<a href="data-validation.html#data-validation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The goal of data validation is to ensure that the available data meet certain quality requirements. This is an important step to undertake before proceeding to data analysis. Data problems are commonplace and may be diverse in nature. Examples are non-unique identifiers (patient or visit number), duplicated records, missing or impossible values (like date = “2022-02-30”), or inconsistent values (like age = 87, and menopausal status = “pre-menopausal”). Because these kind of problems are so common in real study datasets, we need to undertake actions to detect and hopoefully fix them.</p>
+<p>More formally, data validation is defined as an activity aimed at verifying whether or not the values of a variable, or the combination of values of several variables, belong to a pre-specified acceptable set.</p>
+<p>A <em>data validation plan</em> is a list of all the specific verifications we want to carry out for a clinical study. Each of these verifications is called a <em>validation rule</em>. Table <a href="data-validation.html#tab:3-validation-rules">3.1</a> shows some examples of validation rules for a hypothetical data set containing variables age, sex and menopausal status, as well as a patient identifier :</p>
+<table>
+<caption><span id="tab:3-validation-rules">Table 3.1: </span> Example of validation rules</caption>
+<thead>
+<tr class="header">
+<th align="left">Id</th>
+<th align="left">Example of validation rules</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">patient identifier is numeric</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">patient identifier is not missing</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">patient identifier is unique</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">age is not missing</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">age value is between 18 and 99</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">sex is not missing</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">sex is either “male” or “female”</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">if sex is “male”, menopausal status is missing</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">if sex is “female”, menopausal status is either “pre-menopausal” or “pos-menopausal”</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p>Validation rules can refer to several data characteristics. In table <a href="data-validation.html#tab:3-validation-rules">3.1</a>, rule 1 refers to the <em>type</em> of variable, expected to be numeric; rule 2, 4 and 6 refer to data <em>availability</em>; rule 5 refers to the expected <em>range of values</em> of a quantitative variable; and rules 8 and 9 refer to the expected value of a variable <em>conditional</em> on another variable. These are not the ony types of rules we may possibly define (as you will see in this chapter), but just examples of the most common ones.</p>
+<p>In table <a href="data-validation.html#tab:3-validation-rules">3.1</a>, rules are stated in plain English. However, for these to be executable on the relevant data, they need to be coded. The R package <code>validate</code> allows to declare data validation rules (such as those in table <a href="data-validation.html#tab:3-validation-rules">3.1</a>), to confront data with them, and to analyze or visualize the results. So, let’s load this package, as well as <code>tidyverse</code>:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="data-validation.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb363-2"><a href="data-validation.html#cb363-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(validate)</span></code></pre></div>
+<p><br />
+</p>
+<p>In the following sections we show how to implement and execute different types of rules using the <code>validate</code> package.</p>
+<div id="variable-types" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Variable types<a href="data-validation.html#variable-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is worth checking that variables in a dataframe are of the expected type. Suppose we read the DISETAHE data for the first time, and select demographic variables (as defined in section <a href="working-with-dataframes.html#tab:1-ah-dfs">1.6</a>):</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="data-validation.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb364-2"><a href="data-validation.html#cb364-2" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./data/hta.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb364-3"><a href="data-validation.html#cb364-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pid<span class="sc">:</span>ah_dx_dt)</span></code></pre></div>
+<p><br />
+</p>
+<p>In the resuting dataframe <code>demo</code>, we expect <code>age</code>, <code>sex</code>, and <code>region</code> to be <code>numeric</code>, and<code>data_xtract_dt</code> and <code>ah_dx_dt</code> to be of class <code>Date</code>. The following script verifies if this is the case. First, we define rules with <code>validator()</code> and save them into an object name of our choice (<code>my_rules</code>): any expression that resolves to a logical value (<code>TRUE</code> or <code>FALSE</code>) can be used as a rule, and different rules are separated by commas; here we use <code>is.numeric()</code> (from base R) and <code>is.Date()</code> from package <code>lubridate</code>, so that we need to load this package previously. Second, we use <code>confront()</code> to execute the rules on dataframe <code>demo</code>, we save the result as <code>res</code>, and print <code>res</code> to the console:</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="data-validation.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)         <span class="co"># to use is.Date()</span></span>
+<span id="cb365-2"><a href="data-validation.html#cb365-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb365-3"><a href="data-validation.html#cb365-3" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">is.numeric</span>(age),</span>
+<span id="cb365-4"><a href="data-validation.html#cb365-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">is.numeric</span>(sex),</span>
+<span id="cb365-5"><a href="data-validation.html#cb365-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">is.numeric</span>(region),</span>
+<span id="cb365-6"><a href="data-validation.html#cb365-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">is.Date</span>(data_xtract_dt),</span>
+<span id="cb365-7"><a href="data-validation.html#cb365-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">is.Date</span>(ah_dx_dt)</span>
+<span id="cb365-8"><a href="data-validation.html#cb365-8" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb365-9"><a href="data-validation.html#cb365-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb365-10"><a href="data-validation.html#cb365-10" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">confront</span>(demo, my_rules)</span>
+<span id="cb365-11"><a href="data-validation.html#cb365-11" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code>Object of class &#39;validation&#39;
+Call:
+    confront(dat = demo, x = my_rules)
+
+Rules confronted: 5
+   With fails   : 2
+   With missings: 0
+   Threw warning: 0
+   Threw error  : 0</code></pre>
+<p> </p>
+<p>The result informs that two of the five rules confronted to <code>demo</code> have failed (<code>With fails</code>). To get more detailed information, we use <code>summary()</code> on the result provided by <code>confront()</code> (<code>res</code>):</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="data-validation.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning              expression
+1   V1     1      1     0   0 FALSE   FALSE         is.numeric(age)
+2   V2     1      1     0   0 FALSE   FALSE         is.numeric(sex)
+3   V3     1      1     0   0 FALSE   FALSE      is.numeric(region)
+4   V4     1      0     1   0 FALSE   FALSE is.Date(data_xtract_dt)
+5   V5     1      0     1   0 FALSE   FALSE       is.Date(ah_dx_dt)</code></pre>
+<p> </p>
+<p>In the output, rules are identified by names, which by default are <code>V1</code> to <code>V5</code>, but we could have given custom names when defining the rules in <code>validator()</code>, by preceding each rule with the desired name and an equal sign. For each rule, we are presented with the number of items checked, the number of passes and fails, possible errors or warnings raised when executing the rule and the rule expression. In this case, because all the rules refer to the type of a dataframe variable, only one result is produced per rule, either a pass or a fail, and neither errors nor warnings have been raised. The last two rules have failed, indicating that variables <code>data_xtract_dt</code> and <code>ah_dx_dt</code> are not of the expected class <code>Date</code>. Indeed they are <code>POSIXct</code> objects:</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="data-validation.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demo<span class="sc">$</span>data_xtract_dt)</span></code></pre></div>
+<pre><code>[1] &quot;POSIXct&quot; &quot;POSIXt&quot; </code></pre>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="data-validation.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demo<span class="sc">$</span>ah_dx_dt)</span></code></pre></div>
+<pre><code>[1] &quot;POSIXct&quot; &quot;POSIXt&quot; </code></pre>
+<p>Let’s fix these by converting to dates and check again. Note the use of the pipe to to confront the rules to <code>demo</code>, and to summarize the result:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="data-validation.html#cb373-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> demo <span class="sc">%&gt;%</span> </span>
+<span id="cb373-2"><a href="data-validation.html#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(data_xtract_dt, ah_dx_dt), as.Date))</span>
+<span id="cb373-3"><a href="data-validation.html#cb373-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb373-4"><a href="data-validation.html#cb373-4" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning              expression
+1   V1     1      1     0   0 FALSE   FALSE         is.numeric(age)
+2   V2     1      1     0   0 FALSE   FALSE         is.numeric(sex)
+3   V3     1      1     0   0 FALSE   FALSE      is.numeric(region)
+4   V4     1      1     0   0 FALSE   FALSE is.Date(data_xtract_dt)
+5   V5     1      1     0   0 FALSE   FALSE       is.Date(ah_dx_dt)</code></pre>
+<p><br />
+</p>
+<p>Problem fixed!</p>
+</div>
+<div id="missings" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Missings<a href="data-validation.html#missings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Rules to verify data availability can be defined using <code>!is.na()</code>. Function <code>is.na(x)</code> produces a <code>TRUE</code> when <code>x</code> is missing or a <code>FALSE</code> otherwise. The negation operation <code>!</code> can be used to reverse the result, so that <code>!is.na(X)</code> checks that <code>x</code> <em>is not</em> missing, resulting in a <code>TRUE</code> when <code>x</code> is available (not missing) and a <code>FALSE</code> when missing.</p>
+<p>The following checks for availability of demo variables:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="data-validation.html#cb375-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="sc">!</span><span class="fu">is.na</span>(age),</span>
+<span id="cb375-2"><a href="data-validation.html#cb375-2" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span><span class="fu">is.na</span>(sex),</span>
+<span id="cb375-3"><a href="data-validation.html#cb375-3" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span><span class="fu">is.na</span>(region),</span>
+<span id="cb375-4"><a href="data-validation.html#cb375-4" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span><span class="fu">is.na</span>(data_xtract_dt),</span>
+<span id="cb375-5"><a href="data-validation.html#cb375-5" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span><span class="fu">is.na</span>(ah_dx_dt)</span>
+<span id="cb375-6"><a href="data-validation.html#cb375-6" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb375-7"><a href="data-validation.html#cb375-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb375-8"><a href="data-validation.html#cb375-8" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning             expression
+1   V1   500    500     0   0 FALSE   FALSE            !is.na(age)
+2   V2   500    491     9   0 FALSE   FALSE            !is.na(sex)
+3   V3   500    500     0   0 FALSE   FALSE         !is.na(region)
+4   V4   500    500     0   0 FALSE   FALSE !is.na(data_xtract_dt)
+5   V5   500    251   249   0 FALSE   FALSE       !is.na(ah_dx_dt)</code></pre>
+<p><br />
+In this case, because each rule refers to the values of a variable, they producs as many results as rows in the confronted dataframe (<code>items</code> in the output), 500 in this case. Variables <code>age</code>, <code>region</code>, and <code>data_xtract_dt</code> have no missings since all 500 items passed the rule and none failed. However, nine missings (fails) are observed in <code>sex</code>, and two hundred forty-nine in <code>ah_dx_dt</code>.</p>
+<p>A visualization of the frequency of fails per rule can be produced using <code>plot()</code> with the result of <code>confront()</code>:</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="data-validation.html#cb377-1" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-150-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Taking into account that this study was conducted by reviewing medical records, we may think that the date of diagnosis of AHT was not available in the medical records, so that we will have little chances to recover this information. In such a case, we may decide to drop this rule. Let’s then redefine our rules, and take the chance to give them custom names for easier identification of the outputs elements:</p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="data-validation.html#cb378-1" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="at">age_available =</span> <span class="sc">!</span><span class="fu">is.na</span>(age),</span>
+<span id="cb378-2"><a href="data-validation.html#cb378-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sex_available =</span> <span class="sc">!</span><span class="fu">is.na</span>(sex),</span>
+<span id="cb378-3"><a href="data-validation.html#cb378-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">region_available =</span> <span class="sc">!</span><span class="fu">is.na</span>(region),</span>
+<span id="cb378-4"><a href="data-validation.html#cb378-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data_xtraction_available =</span> <span class="sc">!</span><span class="fu">is.na</span>(data_xtract_dt)</span>
+<span id="cb378-5"><a href="data-validation.html#cb378-5" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb378-6"><a href="data-validation.html#cb378-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb378-7"><a href="data-validation.html#cb378-7" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>                      name items passes fails nNA error warning             expression
+1            age_available   500    500     0   0 FALSE   FALSE            !is.na(age)
+2            sex_available   500    491     9   0 FALSE   FALSE            !is.na(sex)
+3         region_available   500    500     0   0 FALSE   FALSE         !is.na(region)
+4 data_xtraction_available   500    500     0   0 FALSE   FALSE !is.na(data_xtract_dt)</code></pre>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="data-validation.html#cb380-1" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(rules) <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-151-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br />
+</p>
+<p>To identify cases that produced a fail for some rule, function <code>violating()</code> should be used . Note that the result is a dataframe containing all cases that produced a fail in some of the rules:</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="data-validation.html#cb381-1" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span>  <span class="fu">violating</span>(rules)</span></code></pre></div>
+<pre><code># A tibble: 9 × 6
+    pid data_xtract_dt region   age   sex ah_dx_dt  
+  &lt;dbl&gt; &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;    
+1   397 2004-04-30          5    42    NA NA        
+2  2651 2004-07-06          9    52    NA NA        
+3  3779 2004-10-06         13    46    NA NA        
+4  4221 2004-10-27         17    77    NA NA        
+5  4650 2004-11-24          2    70    NA 1995-01-01
+6  5087 2004-12-21         17    71    NA 1994-01-01
+7  6195 2005-03-09          8    44    NA NA        
+8  6232 2005-03-09         14    38    NA NA        
+9  7154 2005-05-05          1    65    NA NA        </code></pre>
+<p><br />
+Sometimes we may want to check for the completeness of a set of important variables, that is, to verify if these variables are <em>all</em> available. This is the job of function <code>is_complete()</code>. Here, we check for rows in <code>demo</code> having complete data on <code>sex</code>, <code>age</code> and <code>region</code>:</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="data-validation.html#cb383-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">is_complete</span>(pid, age, sex, region))</span>
+<span id="cb383-2"><a href="data-validation.html#cb383-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confront</span>(demo, my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                         expression
+1   V1   500    491     9   0 FALSE   FALSE is_complete(pid, age, sex, region)</code></pre>
+<p><br />
+</p>
+<p>The result is quite obvious in this case, since we already know that there are no missings in <code>age</code> or <code>region</code>, and there are nine missings in <code>sex</code>. But let’s get the rows failing:</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="data-validation.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">violating</span>(demo, my_rules) </span></code></pre></div>
+<pre><code># A tibble: 9 × 6
+    pid data_xtract_dt region   age   sex ah_dx_dt  
+  &lt;dbl&gt; &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;    
+1   397 2004-04-30          5    42    NA NA        
+2  2651 2004-07-06          9    52    NA NA        
+3  3779 2004-10-06         13    46    NA NA        
+4  4221 2004-10-27         17    77    NA NA        
+5  4650 2004-11-24          2    70    NA 1995-01-01
+6  5087 2004-12-21         17    71    NA 1994-01-01
+7  6195 2005-03-09          8    44    NA NA        
+8  6232 2005-03-09         14    38    NA NA        
+9  7154 2005-05-05          1    65    NA NA        </code></pre>
+<p><br />
+</p>
+<p>Indeed, the nine fails are the same cases reported previously as having <code>sex</code> missing.</p>
+</div>
+<div id="ranges" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Ranges<a href="data-validation.html#ranges" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Checking a range of values is possibly the most common rule imposed on quantitative variables. Range checks are also useful to check if dates are in an expected time window (such as enrollment dates in a study).</p>
+<p>Range checks can be easily implemented with function <code>in_range()</code>, using its arguments <code>min</code> and <code>max</code> to define the expected range. Here we set minimum and maximum values for <code>age</code> as 18 and 95 respectively. The minimum comes from the selection criteria of the study protocol, but the maximum age is set at 95 for illustration purposes only, since no upper bound for age was set in this study and ages above 95 are perfectly possible. The range defined for the data extraction date (<code>data_xtract_dt</code>) corresponds to the study start and finalization dates. Note the use of the pipes to confront the rules to dataframe <code>demo</code>, and to summarize the result:</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="data-validation.html#cb387-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">in_range</span>(age, <span class="at">min =</span> <span class="dv">18</span>, <span class="at">max =</span> <span class="dv">95</span>),</span>
+<span id="cb387-2"><a href="data-validation.html#cb387-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">in_range</span>(data_xtract_dt, <span class="st">&quot;2004-01-01&quot;</span>, <span class="st">&quot;2005-05-31&quot;</span>))</span>
+<span id="cb387-3"><a href="data-validation.html#cb387-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb387-4"><a href="data-validation.html#cb387-4" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                                           expression
+1   V1   500    499     1   0 FALSE   FALSE                    in_range(age, min = 18, max = 95)
+2   V2   500    493     7   0 FALSE   FALSE in_range(data_xtract_dt, &quot;2004-01-01&quot;, &quot;2005-05-31&quot;)</code></pre>
+<p> </p>
+<p>The summary shows that one case has an age value out of the expected range, and seven cases fail for the data extraction date. Let’s see what are the cases failing for these two rules:</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="data-validation.html#cb389-1" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rules)</span></code></pre></div>
+<pre><code># A tibble: 8 × 6
+    pid data_xtract_dt region   age   sex ah_dx_dt  
+  &lt;dbl&gt; &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;    
+1    11 2003-03-15          6    52     1 1998-01-01
+2    15 2003-03-15          6    57     2 1997-01-01
+3    20 2003-05-13          1    62     1 2003-04-10
+4    24 2003-05-27         10    69     2 1993-01-01
+5    33 2003-05-28         10    70     2 1994-01-01
+6    37 2003-06-14          9    64     2 1995-04-07
+7    50 2003-06-16          2    55     2 NA        
+8   562 2004-05-05          3    99     2 1995-01-01</code></pre>
+<p><br />
+</p>
+<p>Patient 562 has an age value of 99 years. The remaining patients have a data extraction date previous to the study start in 2004-01-01, and these are possibly data entry errors.</p>
+<p>Note that, even though <code>sex</code> and <code>region</code> are numeric, we did not check a range for them. The reason is that these can take natural numbers only, like 1 or 2 for <code>sex</code>. A range check would detect unacceptable values like 3, but what about 1.3? A better approach is shown in the next section.</p>
+</div>
+<div id="codelists" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Codelists<a href="data-validation.html#codelists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <em>codelist</em> is a list of possible values for a categorical variable. For instance, codes for <code>sex</code> are 1 or 2, and for <code>region</code> are 1, 2, …, 17 (see table <a href="working-with-dataframes.html#tab:1-hta-vars">1.1</a>). To verify if all values are in the corresponding codelist we can use the %in% operator followed by a vector with the codelist values:</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="data-validation.html#cb391-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(sex <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb391-2"><a href="data-validation.html#cb391-2" aria-hidden="true" tabindex="-1"></a>                      region <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">17</span>)</span>
+<span id="cb391-3"><a href="data-validation.html#cb391-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb391-4"><a href="data-validation.html#cb391-4" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning        expression
+1   V1   500    491     0   9 FALSE   FALSE     sex %vin% 1:2
+2   V2   500    500     0   0 FALSE   FALSE region %vin% 1:17</code></pre>
+<p><br />
+No fails are detected in this case, meaning that all <code>sex</code> and <code>region</code>values belong to the corresponding codelist. If you look at the <code>expression</code> in the oputput, you will note that the <code>%in%</code> operator has been converted to <code>%vin%</code>. No worries, this is a similar operator that handles `NA``s more conveniently.</p>
+<p>Codelist rules can be applied to factors as well. Suppose we had already defined factors for <code>sex</code> and <code>region</code> as done here:</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="data-validation.html#cb393-1" aria-hidden="true" tabindex="-1"></a>demo2 <span class="ot">&lt;-</span> demo <span class="sc">%&gt;%</span></span>
+<span id="cb393-2"><a href="data-validation.html#cb393-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">factor</span>(sex, </span>
+<span id="cb393-3"><a href="data-validation.html#cb393-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
+<span id="cb393-4"><a href="data-validation.html#cb393-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)</span>
+<span id="cb393-5"><a href="data-validation.html#cb393-5" aria-hidden="true" tabindex="-1"></a>                      ),</span>
+<span id="cb393-6"><a href="data-validation.html#cb393-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">region =</span> <span class="fu">factor</span>(region, </span>
+<span id="cb393-7"><a href="data-validation.html#cb393-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">17</span>, </span>
+<span id="cb393-8"><a href="data-validation.html#cb393-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Andalucía&quot;</span>, <span class="st">&quot;Aragón&quot;</span>, <span class="st">&quot;Asturias&quot;</span>,</span>
+<span id="cb393-9"><a href="data-validation.html#cb393-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Baleares&quot;</span>, <span class="st">&quot;Canarias&quot;</span>, <span class="st">&quot;Cantabria&quot;</span>,</span>
+<span id="cb393-10"><a href="data-validation.html#cb393-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Castilla-La Mancha&quot;</span>, <span class="st">&quot;Castilla-León&quot;</span>,</span>
+<span id="cb393-11"><a href="data-validation.html#cb393-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Catalunya&quot;</span>, <span class="st">&quot;Extremadura&quot;</span>, <span class="st">&quot;Galicia&quot;</span>, </span>
+<span id="cb393-12"><a href="data-validation.html#cb393-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;La Rioja&quot;</span>, <span class="st">&quot;Madrid&quot;</span>, <span class="st">&quot;Murcia&quot;</span>, <span class="st">&quot;Navarra&quot;</span>,</span>
+<span id="cb393-13"><a href="data-validation.html#cb393-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;País Vasco&quot;</span>, <span class="st">&quot;Valencia&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb393-14"><a href="data-validation.html#cb393-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pid, data_xtract_dt, age, sex, region, ah_dx_dt)</span></code></pre></div>
+<p><br />
+</p>
+<p>Then, we should write the rules using appropriate values for these factors, as done below. Some categorical variables have a long codelist. If the codelist is stored somewhere (in a file, in a datframe, or in a vector), you can take advantage of it. Here we illustrate the case where the codelist is already contained in a vector (<code>ccaa</code>):</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="data-validation.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="co"># codelist for region</span></span>
+<span id="cb394-2"><a href="data-validation.html#cb394-2" aria-hidden="true" tabindex="-1"></a>ccaa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Andalucía&quot;</span>, <span class="st">&quot;Aragón&quot;</span>, <span class="st">&quot;Asturias&quot;</span>,</span>
+<span id="cb394-3"><a href="data-validation.html#cb394-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Baleares&quot;</span>, <span class="st">&quot;Canarias&quot;</span>, <span class="st">&quot;Cantabria&quot;</span>,</span>
+<span id="cb394-4"><a href="data-validation.html#cb394-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Castilla-La Mancha&quot;</span>, <span class="st">&quot;Castilla-León&quot;</span>,</span>
+<span id="cb394-5"><a href="data-validation.html#cb394-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Catalunya&quot;</span>, <span class="st">&quot;Extremadura&quot;</span>, <span class="st">&quot;Galicia&quot;</span>, </span>
+<span id="cb394-6"><a href="data-validation.html#cb394-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;La Rioja&quot;</span>, <span class="st">&quot;Madrid&quot;</span>, <span class="st">&quot;Murcia&quot;</span>, <span class="st">&quot;Navarra&quot;</span>,</span>
+<span id="cb394-7"><a href="data-validation.html#cb394-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;País Vasco&quot;</span>, <span class="st">&quot;Valencia&quot;</span>)</span>
+<span id="cb394-8"><a href="data-validation.html#cb394-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb394-9"><a href="data-validation.html#cb394-9" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(sex <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>),</span>
+<span id="cb394-10"><a href="data-validation.html#cb394-10" aria-hidden="true" tabindex="-1"></a>                      region <span class="sc">%in%</span> ccaa)</span>
+<span id="cb394-11"><a href="data-validation.html#cb394-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb394-12"><a href="data-validation.html#cb394-12" aria-hidden="true" tabindex="-1"></a>demo2 <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                    expression
+1   V1   500    491     0   9 FALSE   FALSE sex %vin% c(&quot;male&quot;, &quot;female&quot;)
+2   V2   500    500     0   0 FALSE   FALSE             region %vin% ccaa</code></pre>
+<p><br />
+</p>
+<p>Codelists are also relevant for categorical variables stored in character vectors. For instance, sex values could have been provided as text (“male” or “female”) rather than as numeric codes (1 or 2). This is possibly the case where codelist rules are most useful, because data entry errors in texts are not uncommon and sometimes difficult to detect (e.g., blank spaces).</p>
+<p>Suppose that sex and region were recorded as text, as in the following example dataset <code>d</code> with ten patients only:</p>
+<pre><code># A tibble: 10 × 6
+     pid data_xtract_dt   age sex    region          ah_dx_dt  
+   &lt;int&gt; &lt;date&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;date&gt;    
+ 1     1 2003-03-15        57 female Cantabria       1997-01-01
+ 2     2 2003-05-13        62 male   Andalucía       2003-04-10
+ 3     3 2003-05-27        69 female Extremadura     1993-01-01
+ 4     4 2005-03-02        69 male   Castilla-León   NA        
+ 5     5 2005-03-02        76 male   Castilla-León   NA        
+ 6     6 2005-03-03        76 female Cantabria       NA        
+ 7     7 2005-03-07        52 female Aragón          NA        
+ 8     8 2005-03-07        48 female Aragón          1994-07-01
+ 9     9 2005-03-09        72 male   Castilla y León NA        
+10    10 2005-03-09        72 male   Castilla y León NA        </code></pre>
+<p> </p>
+<p>We can now confront this data with the rules defined above:</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="data-validation.html#cb397-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                    expression
+1   V1    10     10     0   0 FALSE   FALSE sex %vin% c(&quot;male&quot;, &quot;female&quot;)
+2   V2    10      8     2   0 FALSE   FALSE             region %vin% ccaa</code></pre>
+<p><br />
+</p>
+<p>Two items failed on the rule for region, let’s see what they are:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="data-validation.html#cb399-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rules)</span></code></pre></div>
+<pre><code># A tibble: 2 × 6
+    pid data_xtract_dt   age sex   region          ah_dx_dt
+  &lt;int&gt; &lt;date&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;           &lt;date&gt;  
+1     9 2005-03-09        72 male  Castilla y León NA      
+2    10 2005-03-09        72 male  Castilla y León NA      </code></pre>
+<p><br />
+</p>
+<p>In cases 9 and 10 of <code>d</code>, the region was recorded as “Castilla y León” instead of the expected value “Castilla-León”.</p>
+</div>
+<div id="uniqueness" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Uniqueness<a href="data-validation.html#uniqueness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A critical issue in any data set is that the case identifiers are <em>unique</em>. The violation of uniqueness of identifiers will produce incorrect results when joining tables. In simple tables like <code>demo</code> there is only one identifier, the patient identifier (<code>pid</code>). However, in <em>long-format</em> tables, more identifiers are needed. Consider for instance the structure suggested in table <a href="working-with-dataframes.html#tab:1-ah-dfs">1.6</a> to store blood pressure in dataframe <code>bp</code>:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="data-validation.html#cb401-1" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./data/hta.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb401-2"><a href="data-validation.html#cb401-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pid, <span class="fu">contains</span>(<span class="st">&quot;bp&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb401-3"><a href="data-validation.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(sbp_v1<span class="sc">:</span>dbp_v6, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb401-4"><a href="data-validation.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb401-5"><a href="data-validation.html#cb401-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(variable, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;measure&quot;</span>, <span class="st">&quot;visit&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb401-6"><a href="data-validation.html#cb401-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value)</span>
+<span id="cb401-7"><a href="data-validation.html#cb401-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-8"><a href="data-validation.html#cb401-8" aria-hidden="true" tabindex="-1"></a>bp</span></code></pre></div>
+<pre><code># A tibble: 1,519 × 4
+     pid visit   sbp   dbp
+   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1    11 v1      130    80
+ 2    11 v2      140    80
+ 3    15 v1      130    80
+ 4    15 v2      120    80
+ 5    15 v3      120    90
+ 6    15 v4      130    90
+ 7    20 v1      130    85
+ 8    20 v2      120    80
+ 9    20 v3      140    80
+10    20 v4      130    80
+# … with 1,509 more rows</code></pre>
+<p>In this case, <code>sbp</code> and <code>dbp</code> are <em>observed</em> variables, while <code>pid</code> and <code>visit</code> are identifiers (also called <em>keys</em> in database jargon). The combination of <code>pid</code> and <code>visit</code> values should be unique in this dataframe, that is, all rows should have a different combination of <code>pid</code> and <code>visit</code> values.</p>
+<p>The uniqueness of identifiers can be checked with <code>is_unique()</code>, passing it all identifiers as arguments:</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="data-validation.html#cb403-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">is_unique</span>(pid, visit))</span>
+<span id="cb403-2"><a href="data-validation.html#cb403-2" aria-hidden="true" tabindex="-1"></a>bp <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning            expression
+1   V1  1519   1519     0   0 FALSE   FALSE is_unique(pid, visit)</code></pre>
+<p><br />
+</p>
+<p>In this case, all 1519 rows in <code>bp</code> pass the rule, meaning that the combination of keys are unique (different for all rows). However, consider this example data to see what happens when we apply the same rule:</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="data-validation.html#cb405-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">100</span><span class="sc">:</span><span class="dv">102</span>, <span class="at">each =</span> <span class="dv">3</span>), <span class="dv">100</span>), </span>
+<span id="cb405-2"><a href="data-validation.html#cb405-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">visit =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="dv">3</span>)) </span>
+<span id="cb405-3"><a href="data-validation.html#cb405-3" aria-hidden="true" tabindex="-1"></a>d</span></code></pre></div>
+<pre><code>   pid visit
+1  100     1
+2  100     2
+3  100     3
+4  101     1
+5  101     2
+6  101     3
+7  102     1
+8  102     2
+9  102     3
+10 100     3</code></pre>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="data-validation.html#cb407-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning            expression
+1   V1    10      8     2   0 FALSE   FALSE is_unique(pid, visit)</code></pre>
+<p><br />
+</p>
+<p>Two fails are found, indicating that there are two rows with the same combination of identifiers. Let’s find them:</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="data-validation.html#cb409-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rules) </span></code></pre></div>
+<pre><code>   pid visit
+3  100     3
+10 100     3</code></pre>
+<p><br />
+</p>
+<p>The third and tenth rows both refer to patient 100 and visit 3, an unacceptable duplication of keys.</p>
+<p>Function <code>all_unique()</code> is a variation of <code>is_unique()</code> producing a single result for the whole dataset confronted: <code>TRUE</code> when all rows have unique combinations of identifiers, or <code>FALSE</code> otherwise:</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="data-validation.html#cb411-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">all_unique</span>(pid, visit))</span>
+<span id="cb411-2"><a href="data-validation.html#cb411-2" aria-hidden="true" tabindex="-1"></a>bp <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning             expression
+1   V1     1      1     0   0 FALSE   FALSE all_unique(pid, visit)</code></pre>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="data-validation.html#cb413-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning             expression
+1   V1     1      0     1   0 FALSE   FALSE all_unique(pid, visit)</code></pre>
+<p><br />
+</p>
+<p>As you see, <code>bp</code> passes, but <code>d</code> fails.</p>
+</div>
+<div id="linear-sequences" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Linear sequences<a href="data-validation.html#linear-sequences" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In many longitudinal studies, patients are assessed repeatedly at pre-specified time points. For instance, suppose a clinical trial where patients are assessed at five different visits, and blood pressure is recorded at each visit. These data can be structured much like the <code>bp</code> dataframe of DISEHTAE, with two keys for patient and visit, and two observed variables for SBP and DBP. We would expect such a dataframe to have five rows per patient, one for each visit. However, if a patient has dropped out or skipped a visit, the sequence of visits for this patient will be incomplete. In the following example dataframe <code>d</code>, the first patient has all visits, but the remaining two patients have an incomplete sequence of visits.</p>
+<pre><code># A tibble: 12 × 4
+     pid visit   sbp   dbp
+   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1   101     1   142    80
+ 2   101     2   136    62
+ 3   101     3   150    80
+ 4   101     4   150    78
+ 5   101     5   144    80
+ 6   102     1   160    80
+ 7   102     2   150    80
+ 8   102     3   126    67
+ 9   103     1   140    90
+10   103     3   120    70
+11   103     4   120    80
+12   103     5   100    70</code></pre>
+<p><br />
+</p>
+<p>The completeness of a linear sequence can be verified with <code>in_linear_sequence()</code>, by specifying the <code>start</code>ing and <code>end</code>ing values of the sequence. If the sequence is expected <em>within groups</em> of rows, the variable defining the groups of rows has to be indicated in a <code>by</code> argument. In this case, the sequence is expected within patients, so that we need to specify <code>by = pid</code>:</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="data-validation.html#cb416-1" aria-hidden="true" tabindex="-1"></a>my_rule <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">in_linear_sequence</span>(visit, <span class="at">begin =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">5</span>, <span class="at">by =</span> pid))</span>
+<span id="cb416-2"><a href="data-validation.html#cb416-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb416-3"><a href="data-validation.html#cb416-3" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rule) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                                              expression
+1   V1    12      5     7   0 FALSE   FALSE in_linear_sequence(visit, begin = 1, end = 5, by = pid)</code></pre>
+<p><br />
+</p>
+<p>When dataframe <code>d</code> is confronted with the rule, all rows of patients having an incomplete sequence of visits are fails. In this case there are seven such rows, and we list them here:</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="data-validation.html#cb418-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rule)</span></code></pre></div>
+<pre><code># A tibble: 7 × 4
+    pid visit   sbp   dbp
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1   102     1   160    80
+2   102     2   150    80
+3   102     3   126    67
+4   103     1   140    90
+5   103     3   120    70
+6   103     4   120    80
+7   103     5   100    70</code></pre>
+<p><br />
+</p>
+<p>Indeed, patient 102 has only the first three visits, and patient 103 lacks visit 2.</p>
+</div>
+<div id="availability-of-records" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Availability of records<a href="data-validation.html#availability-of-records" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the previous section we saw how to detect missing rows in a long dataframe were patients are expected to have a fixed number of rows corresponding to a linear sequence of visits. In other cases however, the fixed structure of rows per patient is not that simple. As an example, consider the rather extreme vertical structure for the same example data shown in the previous section:</p>
+<pre><code># A tibble: 24 × 4
+     pid visit varname value
+   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1   101     1 sbp       142
+ 2   101     1 dbp        80
+ 3   101     2 sbp       136
+ 4   101     2 dbp        62
+ 5   101     3 sbp       150
+ 6   101     3 dbp        80
+ 7   101     4 sbp       150
+ 8   101     4 dbp        78
+ 9   101     5 sbp       144
+10   101     5 dbp        80
+# … with 14 more rows</code></pre>
+<p><br />
+</p>
+<p>In this dataframe, <code>pid</code>, <code>visit</code> and <code>varname</code> are key variables, and all observed measures are recorded under <code>value</code>. A patient with complete data should have 5 visits and two variables in each, therefore 5 x 2 = 10 rows. A template of the per-patient structure can be created with <code>expand.grig()</code>, a function of base R that will generate all possible combinations of its arguments:</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="data-validation.html#cb421-1" aria-hidden="true" tabindex="-1"></a>template <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">visit =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">varname =</span> <span class="fu">c</span>(<span class="st">&quot;sbp&quot;</span>, <span class="st">&quot;dbp&quot;</span>),</span>
+<span id="cb421-2"><a href="data-validation.html#cb421-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb421-3"><a href="data-validation.html#cb421-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(visit, <span class="fu">desc</span>(varname))</span>
+<span id="cb421-4"><a href="data-validation.html#cb421-4" aria-hidden="true" tabindex="-1"></a>template</span></code></pre></div>
+<pre><code>   visit varname
+1      1     sbp
+2      1     dbp
+3      2     sbp
+4      2     dbp
+5      3     sbp
+6      3     dbp
+7      4     sbp
+8      4     dbp
+9      5     sbp
+10     5     dbp</code></pre>
+<p><br />
+</p>
+<p>A rule to check the compliance with this structure can be written with <code>contains_exactly()</code>, providing a <em>reference</em> to the template in its <code>keys</code> argument. If the template is to be applied by groups of rows, the grouping variable has to be indicated in the <code>by</code> argument. In this case, the template is to be applied to each and every patient, and thus <code>by = pid</code>. Last, the (per-patient) template needs to be passed to <code>confront()</code> as a <em>named</em> list, the name being the reference we used in the rule definition.</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="data-validation.html#cb423-1" aria-hidden="true" tabindex="-1"></a>my_rule <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">contains_exactly</span>(<span class="at">keys =</span> keys_template, <span class="at">by =</span> pid))</span>
+<span id="cb423-2"><a href="data-validation.html#cb423-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-3"><a href="data-validation.html#cb423-3" aria-hidden="true" tabindex="-1"></a>d_long <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rule, <span class="at">ref =</span> <span class="fu">list</span>(<span class="at">keys_template =</span> template)) <span class="sc">%&gt;%</span> </span>
+<span id="cb423-4"><a href="data-validation.html#cb423-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                                       expression
+1   V1    24     10    14   0 FALSE   FALSE contains_exactly(keys = keys_template, by = pid)</code></pre>
+<p><br />
+</p>
+<p>The result shows 14 fails, corresponding to patients whose rows do not match exactly the template structure of <code>visit</code> and <code>varname</code> combinations. As always, we can use <code>violating()</code> to see the fails:</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="data-validation.html#cb425-1" aria-hidden="true" tabindex="-1"></a>d_long <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rule, <span class="at">ref =</span> <span class="fu">list</span>(<span class="at">keys_template =</span> template)) </span></code></pre></div>
+<pre><code># A tibble: 14 × 4
+     pid visit varname value
+   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1   102     1 sbp       160
+ 2   102     1 dbp        80
+ 3   102     2 sbp       150
+ 4   102     2 dbp        80
+ 5   102     3 sbp       126
+ 6   102     3 dbp        67
+ 7   103     1 sbp       140
+ 8   103     1 dbp        90
+ 9   103     3 sbp       120
+10   103     3 dbp        70
+11   103     4 sbp       120
+12   103     4 dbp        80
+13   103     5 sbp       100
+14   103     5 dbp        70</code></pre>
+<p><br />
+</p>
+<p>In this case, the deviation from the template structure is due to the lack of visits 4 and 5 in patient 102, and visit 2 in patient 103. However, a case having all visits but a single row for one of them (e.g., <code>sbp</code>, with no row for <code>dbp</code>) would also fail.</p>
+</div>
+<div id="multivariate-rules" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Multivariate rules<a href="data-validation.html#multivariate-rules" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Multivariate rules are rules that involve more than one variable. When two (or more) variables are related, it might be the case that not all possible combinations of values are acceptable. A particularly common case occurs when a variable is only relevant for certain values of another variable, as is the case in the example rules 8 and 9 of table <a href="data-validation.html#tab:3-validation-rules">3.1</a>. More generally, multivariate rules are useful whenever, for a set of variables, only certain combination of possible values are acceptable.</p>
+<div id="inequalities" class="section level3 hasAnchor" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Inequalities<a href="data-validation.html#inequalities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Checking for inequalities is a common type of multivariate rule. For instance, a SBP of 95 mmHg is quite low but not impossible, as is a DBP of 100 mmHg. However, their combination is just impossible since DBP cannot exceed DBP. Therefore, we could check for the inequality SBP &gt; DBP. This is done here for dataframe <code>bp</code> of DISEHTAE:</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="data-validation.html#cb427-1" aria-hidden="true" tabindex="-1"></a>my_rule <span class="ot">&lt;-</span> <span class="fu">validator</span>(sbp <span class="sc">&gt;</span> dbp)</span>
+<span id="cb427-2"><a href="data-validation.html#cb427-2" aria-hidden="true" tabindex="-1"></a>bp <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rule) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning expression
+1   V1  1519   1519     0   0 FALSE   FALSE  sbp &gt; dbp</code></pre>
+<p><br />
+</p>
+<p>In this case, all 1519 rows in <code>bp</code> pass the rule.</p>
+<p>Another common application of inequality checks are visit dates in longitudinal studies. Dates are prone to data entry errors, and it is important to verify they comply with the expected chronological order to avoid absurd results, such as negative values, when computing the length of periods. Inequality checks (e.g. date of visit 1 &lt; date of visit 2) help detect inconsistent date sequences.</p>
+</div>
+<div id="conditional-restrictions" class="section level3 hasAnchor" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> Conditional restrictions<a href="data-validation.html#conditional-restrictions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider variables <code>glucose</code> and <code>dx_dm</code> in dataframe <code>risk_factors</code> as defined in table <a href="working-with-dataframes.html#tab:1-ah-dfs">1.6</a>. Non-diabetic patients (<code>dx_dm = "no"</code>, assuming it was defined as a factor) are expected to have blood glucose values no higher than 126 mg/dl. A rule to check if this is the case can be written using an <code>if</code> statement: a <em>condition</em> is specified within brackets after <code>if</code>, and is followed by a logical expression (i.e., an expression resolving to either <code>TRUE</code> or <code>FALSE</code>):</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="data-validation.html#cb429-1" aria-hidden="true" tabindex="-1"></a>my_rule <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="cf">if</span> (dx_dm <span class="sc">==</span> <span class="st">&quot;no&quot;</span>) glucose <span class="sc">&lt;=</span> <span class="dv">126</span>)</span>
+<span id="cb429-2"><a href="data-validation.html#cb429-2" aria-hidden="true" tabindex="-1"></a>risk_factors <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rule) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>  name items passes fails nNA error warning                               expression
+1   V1   500    239     5 256 FALSE   FALSE dx_dm != &quot;no&quot; | (glucose - 126 &lt;= 1e-08)</code></pre>
+<p> </p>
+<p>The rule passes in 239 patients, but fails in five, and cannot be evaluated in 256 cases due to missing values in either variable. Let’s see what are the fails:</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="data-validation.html#cb431-1" aria-hidden="true" tabindex="-1"></a>risk_factors <span class="sc">%&gt;%</span> <span class="fu">violating</span>(my_rule)</span></code></pre></div>
+<pre><code># A tibble: 5 × 3
+    pid glucose dx_dm
+  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;
+1   324     137 no   
+2  1531     157 no   
+3  1868     168 no   
+4  2507     131 no   
+5  3355     184 no   </code></pre>
+<p><br />
+</p>
+<p>While one patient has a glucose value only slightly above 126 mg/dl, the remaining four patients have values well above this limit.</p>
+<p>Conditional restrictions are very common. A particular case where they are relevant is when a set of variables is recorded conditioned on the value of another variable. The last two rules in table <a href="data-validation.html#tab:3-validation-rules">3.1</a> exemplify one such case, since menopausal status should be recorded for women only. Other common examples are pregnancy tests conducted in pre-menopausal women only, or adverse event characteristics (such as seriousness, severity, onset date, etc.) that are only recorded when an adverse event is reported. In these and other cases, conditional restrictions help detect inconsistent data such as pregnant men, or patients with no adverse events for whom an event onset date has been recorded.</p>
+</div>
+</div>
+<div id="rules-stored-in-files" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> Rules stored in files<a href="data-validation.html#rules-stored-in-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You may have found surprising that <code>validator()</code> does not allow to specify the dataframe we want to check, so that we need to use <code>confront()</code> to specify it. Wouldn’t it be more efficient to solve the problem with a single function? Maybe, but this design is on purpose, and the reason is to allow re-utilization of rules in different studies.</p>
+<p>All studies record demographic and anthropometric data, all clinical trials record comorbidities, adverse events and concomitant medications, and most record vitals signs, or even ECG and laboratory results. For this reason, clinical research units tend to have <em>standard</em> CRFs and data file formats that are reused in different studies with few study-specific modifications. Standardization makes processes not only more efficient, but also more robust, since repeated utilization will show weaknesses that may be optimized for future uses. Writing validation rules is no exception, and standard rules are worth having.</p>
+<p>A feature that facilitates the standardization of rules is the possibility of storing them in a file, read this file into a dataframe, and use it to define the rules with <code>validator()</code>. Let’s see how to do it to check some of the demographic variables of DISEHTAE (before defining any factor):</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="data-validation.html#cb433-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./data/hta.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb433-2"><a href="data-validation.html#cb433-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pid, age, sex, region, data_xtract_dt, ah_dx_dt) <span class="sc">%&gt;%</span> </span>
+<span id="cb433-3"><a href="data-validation.html#cb433-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(data_xtract_dt, ah_dx_dt), as.Date))</span>
+<span id="cb433-4"><a href="data-validation.html#cb433-4" aria-hidden="true" tabindex="-1"></a>demo</span></code></pre></div>
+<pre><code># A tibble: 500 × 6
+     pid   age   sex region data_xtract_dt ah_dx_dt  
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;         &lt;date&gt;    
+ 1    11    52     1      6 2003-03-15     1998-01-01
+ 2    15    57     2      6 2003-03-15     1997-01-01
+ 3    20    62     1      1 2003-05-13     2003-04-10
+ 4    24    69     2     10 2003-05-27     1993-01-01
+ 5    33    70     2     10 2003-05-28     1994-01-01
+ 6    37    64     2      9 2003-06-14     1995-04-07
+ 7    50    55     2      2 2003-06-16     NA        
+ 8    83    64     1      5 2004-03-15     1981-01-01
+ 9    91    57     1      5 2004-03-15     1996-01-01
+10   114    73     2      5 2004-04-05     1991-06-04
+# … with 490 more rows</code></pre>
+<p><br />
+</p>
+<p>To check the <code>demo</code> data above, we have defined twelve rules and stored them in a MS Excel file. The following script reads this file and shows its contents:</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="data-validation.html#cb435-1" aria-hidden="true" tabindex="-1"></a>rules_df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./data/demo_rules.xlsx&quot;</span>) </span>
+<span id="cb435-2"><a href="data-validation.html#cb435-2" aria-hidden="true" tabindex="-1"></a>rules_df</span></code></pre></div>
+<pre><code># A tibble: 12 × 3
+   name         rule                  description                                  
+   &lt;chr&gt;        &lt;chr&gt;                 &lt;chr&gt;                                        
+ 1 pid_num      is.numeric(pid)       pid is numeric                               
+ 2 pid_avail    !is.na(pid)           pid is not missing                           
+ 3 pid_unique   is_unique(pid)        pid is unique                                
+ 4 age_num      is.numeric(age)       age is numeric                               
+ 5 age_avail    !is.na(age)           age is not missing                           
+ 6 age_range    in_range(age, 18, 95) age range defined in study selection criteria
+ 7 sex_num      is.numeric(sex)       sex is numeric                               
+ 8 sex_avail    !is.na(sex)           sex is not missing                           
+ 9 sex_codes    sex %in% 1:2          sex is either 1 or 2                         
+10 region_num   is.numeric(region)    region is numeric                            
+11 region_avail !is.na(region)        region is not missing                        
+12 region_codes region %in% 1:17      region is a natural number from 1 to 17      </code></pre>
+<p><br />
+</p>
+<p>The resulting dataframe <code>rules_df</code> can be passed to <code>validator()</code> in its argument <code>.data</code>, provided it has (at least) three variables with the precise names <code>name</code>, <code>rule</code> and <code>description</code>, as shown below:</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="data-validation.html#cb437-1" aria-hidden="true" tabindex="-1"></a>my_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="at">.data =</span> rules_df)</span>
+<span id="cb437-2"><a href="data-validation.html#cb437-2" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(my_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>           name items passes fails nNA error warning            expression
+1       pid_num     1      1     0   0 FALSE   FALSE       is.numeric(pid)
+2     pid_avail   500    500     0   0 FALSE   FALSE           !is.na(pid)
+3    pid_unique   500    500     0   0 FALSE   FALSE        is_unique(pid)
+4       age_num     1      1     0   0 FALSE   FALSE       is.numeric(age)
+5     age_avail   500    500     0   0 FALSE   FALSE           !is.na(age)
+6     age_range   500    499     1   0 FALSE   FALSE in_range(age, 18, 95)
+7       sex_num     1      1     0   0 FALSE   FALSE       is.numeric(sex)
+8     sex_avail   500    491     9   0 FALSE   FALSE           !is.na(sex)
+9     sex_codes   500    491     0   9 FALSE   FALSE         sex %vin% 1:2
+10   region_num     1      1     0   0 FALSE   FALSE    is.numeric(region)
+11 region_avail   500    500     0   0 FALSE   FALSE        !is.na(region)
+12 region_codes   500    500     0   0 FALSE   FALSE     region %vin% 1:17</code></pre>
+</div>
+<div id="working-with-validator-objects" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> Working with validator objects<a href="data-validation.html#working-with-validator-objects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Function <code>validator()</code> returns objects of a special class <code>validator</code> (this class is defined in package <code>validate</code>):</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="data-validation.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(my_rules)</span></code></pre></div>
+<pre><code>[1] &quot;validator&quot;
+attr(,&quot;package&quot;)
+[1] &quot;validate&quot;</code></pre>
+<p><br />
+</p>
+<p>Although these objects <em>are not</em> lists (try <code>is.list()</code>), they <em>behave</em> much like lists. In particular, they can be subsetted, which is useful to adapt a particular set of standatd rules to a specific study. For instance, while virtually all clinical studies record age and sex, the region is not always recorded. Then if we were to check demographic variables in a new study with no <code>region</code> variable, we could subset the standard rules as shown below:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="data-validation.html#cb441-1" aria-hidden="true" tabindex="-1"></a>rules_subset <span class="ot">&lt;-</span> my_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>]</span>
+<span id="cb441-2"><a href="data-validation.html#cb441-2" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(rules_subset) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>        name items passes fails nNA error warning            expression
+1    pid_num     1      1     0   0 FALSE   FALSE       is.numeric(pid)
+2  pid_avail   500    500     0   0 FALSE   FALSE           !is.na(pid)
+3 pid_unique   500    500     0   0 FALSE   FALSE        is_unique(pid)
+4    age_num     1      1     0   0 FALSE   FALSE       is.numeric(age)
+5  age_avail   500    500     0   0 FALSE   FALSE           !is.na(age)
+6  age_range   500    499     1   0 FALSE   FALSE in_range(age, 18, 95)
+7    sex_num     1      1     0   0 FALSE   FALSE       is.numeric(sex)
+8  sex_avail   500    491     9   0 FALSE   FALSE           !is.na(sex)
+9  sex_codes   500    491     0   9 FALSE   FALSE         sex %vin% 1:2</code></pre>
+<p><br />
+</p>
+<p>Similarly, <code>validator</code> objects can be extended. For instance, our standard set of rules for demographic data does not include checks on the date of data extraction, since this is not always recorded. To extend the standard set of rules defined above, we can create a second validator with the new rules, and then <em>add</em> them to <code>rules_subset</code> using the <code>+</code> operator:</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="data-validation.html#cb443-1" aria-hidden="true" tabindex="-1"></a>new_rules <span class="ot">&lt;-</span> <span class="fu">validator</span>(<span class="fu">is.Date</span>(data_xtract_dt), </span>
+<span id="cb443-2"><a href="data-validation.html#cb443-2" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">!</span><span class="fu">is.na</span>(data_xtract_dt),</span>
+<span id="cb443-3"><a href="data-validation.html#cb443-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">in_range</span>(data_xtract_dt, <span class="st">&quot;2004-01-01&quot;</span>, <span class="st">&quot;2005-05-31&quot;</span>))</span>
+<span id="cb443-4"><a href="data-validation.html#cb443-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb443-5"><a href="data-validation.html#cb443-5" aria-hidden="true" tabindex="-1"></a>final_rules <span class="ot">&lt;-</span> rules_subset <span class="sc">+</span> new_rules</span>
+<span id="cb443-6"><a href="data-validation.html#cb443-6" aria-hidden="true" tabindex="-1"></a>demo <span class="sc">%&gt;%</span> <span class="fu">confront</span>(final_rules) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>         name items passes fails nNA error warning                                           expression
+1     pid_num     1      1     0   0 FALSE   FALSE                                      is.numeric(pid)
+2   pid_avail   500    500     0   0 FALSE   FALSE                                          !is.na(pid)
+3  pid_unique   500    500     0   0 FALSE   FALSE                                       is_unique(pid)
+4     age_num     1      1     0   0 FALSE   FALSE                                      is.numeric(age)
+5   age_avail   500    500     0   0 FALSE   FALSE                                          !is.na(age)
+6   age_range   500    499     1   0 FALSE   FALSE                                in_range(age, 18, 95)
+7     sex_num     1      1     0   0 FALSE   FALSE                                      is.numeric(sex)
+8   sex_avail   500    491     9   0 FALSE   FALSE                                          !is.na(sex)
+9   sex_codes   500    491     0   9 FALSE   FALSE                                        sex %vin% 1:2
+10         V1     1      1     0   0 FALSE   FALSE                              is.Date(data_xtract_dt)
+11         V2   500    500     0   0 FALSE   FALSE                               !is.na(data_xtract_dt)
+12         V3   500    493     7   0 FALSE   FALSE in_range(data_xtract_dt, &quot;2004-01-01&quot;, &quot;2005-05-31&quot;)</code></pre>
+</div>
+<div id="designing-data-validation-plans-dvp" class="section level2 hasAnchor" number="3.11">
+<h2><span class="header-section-number">3.11</span> Designing data validation plans (DVP)<a href="data-validation.html#designing-data-validation-plans-dvp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Designing a useful data validation plan (DVP) is not easy for several reasons. First, because in real studies the number of variables is high, or <em>very</em> high, and the number of potential validation checks grows exponentially with the number of variables (consider the possible number of variable combinations for multivariate rules!); and second, because it is difficult to give general recommendations on what is worth checking, since this will depend on <em>what is the purpose</em> of the DVP, and <em>when</em> are we going to execute it. For instance, in regulatory clinical trials DVPs are very exhaustive and are executed during (or shortly after) data entry, possibly through an electronic CRF, so that the chances to recover accidental missings and amend inconsistent data will be high. However, this will be very different in a small study whose data is received in MS Excel files once the study has been completed. In such a case, the chances to fix data problems will be much lower and at a much higher cost. Consequently, the DVP should concentrate on issues that are either critical, or easily solvable. Because this last case is possibly the most frequent one in many clinical research settings, some advise is given on how to approach the design of the DVP for these studies.</p>
+<p>The most important recommendation is to refrain from being exhaustive. Achieving perfect data quality is utopic, and attemps to achieve this goal may be extremely time consuming and very likely unsuccessful. Rather, any effort should be made to target issues that are either very important, or easy to fix. Table <a href="data-validation.html#tab:3-dvp">3.2</a> provides some clues on what should be checked according to this attitude, and some clarifications follow.</p>
+<table>
+<caption><span id="tab:3-dvp">Table 3.2: </span> Recommendations for DVPs in small studies with no eCRF</caption>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Check for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">All variables</td>
+<td align="left">Variable type</td>
+</tr>
+<tr class="even">
+<td align="left">Key variables</td>
+<td align="left">Missing or non-unique values</td>
+</tr>
+<tr class="odd">
+<td align="left">Observed variables, critical</td>
+<td align="left">Missing, <em>implausible</em> or <em>inconsistent</em> values</td>
+</tr>
+<tr class="even">
+<td align="left">Observed variables, non-critical</td>
+<td align="left"><em>Impossible</em> values</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p>The type of variables should be checked for all variables, and key variables (such as patient, visit and other identifiers) should be checked in all dataframes. One one hand, we cannot afford missing or non-unique identifiers, and on the other hand common problems in these variables are usually easy to fix.</p>
+<p>Concerning observed variables, it is desirable to concentrate the efforts on <em>critical</em> variables. Reasonable criteria to identify critical variables are:</p>
+<ul>
+<li><p>variables needed to assess the study objectives.</p></li>
+<li><p>variables needed to define study populations and exclusions (including study selection criteria).</p></li>
+<li><p>variables needed to characterize the study population (age, sex, etc), or to be described in any communication of the study results.</p></li>
+</ul>
+<p>Non-critical variables should be a minority in well designed studies, but this is not always the case. For these variables, only values that are obviously wrong or not credible are worth detecting. When resources are scarce and verification and amendment of non-credible data is not affordable, we can always set them to missing. While not ideal, this is better than proceeding to analysis with gross data errors. Wrong or hardly credible values can be detected with codelist rules for categorical variables and range checks for quantitative variables, but <em>broad limits</em> are recommended in this last case. Setting these limits require expert judgment on what is or is not possible or credible. Easy solutions such as using normal ranges are to be avoided.</p>
+<p>A last consideration refers to derived variables. Virtually all studies include derived variables that will be reported in papers, such as the body mass index (BMI) computed from body weight and height. In some studies, even primary or secondary outcomes are derived from observed variables, as is the case of the estimated glomerular filtration rate (eGFR) computed from blood creatinine in kidney disease studies. Detecting inconsistencies in the components of a computational formula may be much harder than detecting suspicious values in the results of the computation. For instance, a body weight of 48 kg is perfectly possible, as is a body height of 182 cm, but their combination is unlikely. To devise a rule that detects this type of inconsistency is not easy. However, the BMI of 14.5 kg/m^2 resulting from the previous values is highly suspicious and can be easily detected by a range check. For this reason, it is recommended to include derived variables in the DVP, and compute them before confronting the rules to the data.</p>
+</div>
+<div id="resources-2" class="section level2 unnumbered hasAnchor">
+<h2>Resources<a href="data-validation.html#resources-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>For more on the <code>validate</code> package, see <a href="https://cran.r-project.org/web/packages/validate/vignettes/cookbook.html">The Data Validation Cookbook</a>.</p></li>
+<li><p>If you need to deal with ICD-9 or ICD-10 codes you may want to explore the R package <a href="https://jackwasey.github.io/icd/"><code>icd</code></a>, or look at <a href="https://www.r-bloggers.com/2019/05/whats-that-disease-called-overview-of-icd-package/">this short intro</a>.</p></li>
+<li><p>Work with medical immages? Have a look at <a href="https://cran.r-project.org/web/views/MedicalImaging.html">this CRAN Task View</a>.</p></li>
+<li><p>If your raw data is stored in a database, you want to look at <a href="https://cran.r-project.org/web/views/Databases.html">this CRAN Task View</a>.</p></li>
+<li><p>Though primarily focussed on data analysis, you may want to know about CRAN Task Views for <a href="https://cran.r-project.org/web/views/ClinicalTrials.html">Clinical Trials</a>, <a href="https://cran.r-project.org/web/views/Pharmacokinetics.html">Pharmacokinetic Data Analysis</a>, <a href="https://cran.r-project.org/web/views/Psychometrics.html">Psychometrics</a>, and <a href="https://cran.r-project.org/web/views/Genetics.html">Genetics</a>.</p></li>
+</ul>
+</div>
+<div id="exercises-2" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="data-validation.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Run the following code to create the dataframes defined in table <a href="working-with-dataframes.html#tab:1-ah-dfs">1.6</a>, with no factors created.</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="data-validation.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb445-2"><a href="data-validation.html#cb445-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-3"><a href="data-validation.html#cb445-3" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./data/hta.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>)</span>
+<span id="cb445-4"><a href="data-validation.html#cb445-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-5"><a href="data-validation.html#cb445-5" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> ah <span class="sc">%&gt;%</span> <span class="fu">select</span>(pid<span class="sc">:</span>ah_dx_dt) <span class="sc">%&gt;%</span></span>
+<span id="cb445-6"><a href="data-validation.html#cb445-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(data_xtract_dt, ah_dx_dt), as.Date))</span>
+<span id="cb445-7"><a href="data-validation.html#cb445-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-8"><a href="data-validation.html#cb445-8" aria-hidden="true" tabindex="-1"></a>risk_factors <span class="ot">&lt;-</span> ah <span class="sc">%&gt;%</span> <span class="fu">select</span>(pid, glucose<span class="sc">:</span>creatinine)</span>
+<span id="cb445-9"><a href="data-validation.html#cb445-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-10"><a href="data-validation.html#cb445-10" aria-hidden="true" tabindex="-1"></a>treatments <span class="ot">&lt;-</span> ah <span class="sc">%&gt;%</span> <span class="fu">select</span>(pid, lmr<span class="sc">:</span>other) </span>
+<span id="cb445-11"><a href="data-validation.html#cb445-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-12"><a href="data-validation.html#cb445-12" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> ah <span class="sc">%&gt;%</span></span>
+<span id="cb445-13"><a href="data-validation.html#cb445-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pid, <span class="fu">contains</span>(<span class="st">&quot;bp&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb445-14"><a href="data-validation.html#cb445-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(sbp_v1<span class="sc">:</span>dbp_v6, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb445-15"><a href="data-validation.html#cb445-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb445-16"><a href="data-validation.html#cb445-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(variable, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;measure&quot;</span>, <span class="st">&quot;visit&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb445-17"><a href="data-validation.html#cb445-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value)</span>
+<span id="cb445-18"><a href="data-validation.html#cb445-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-19"><a href="data-validation.html#cb445-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ah)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><p>Create a validator object to check that the patient identifier is numeric, has no missings, and is unique. Then confront this object with all dataframes, exception made of <code>bp</code>.</p></li>
+<li><p>In dataset <code>bp</code>, the visit is a character variable taking values <code>"v1", "v2", ...</code>. Convert it to a numeric variable (taking values 1, 2, …), and then, create a validator object to check that the keys of <code>bp</code> are numeric, do not have missings, and visit numbers are always natural numbers in the range 1 to 6.</p></li>
+<li><p>Produce a plot showing the distribution of missing for all observed variables in dataframe <code>risk_factors</code>.</p></li>
+<li><p>Verify that all categorical variables in <code>risk_factors</code> have values in the corresponding codelist (see coding in table <a href="working-with-dataframes.html#tab:1-hta-vars">1.1</a>).</p></li>
+<li><p>Verify that patients <em>without</em> a diagnosis of dyslipidemia have a value of total cholesterol below 240 mg/dl (acording to guidelines by the time the study was conducted).</p></li>
+<li><p>In many studies, demographic and anthropometric data are measured at baseline and collected in a <code>demo</code> dataframe. Common variables in such a dataframe are age, sex, weight, and height, as well as a patient identifier. Prepare such a dataframe from the DISEHTAE data, and create a validator object with all rules deemed necessary to control for the completness and quality of data. Assume the study was conducted in adults of either sex, age is no lower than 18y and no greater than 99y, and the BMI is between 16 and 40 kg/m<sup>2</sup>.</p></li>
+<li><p>Save the rules defined in the validator object you created in the previous exercise to an external file. Hint: use <code>as.data.frame()</code> with the validator object, and then function <code>rio::export()</code> to export to file “demo_rules.xlsx”.</p></li>
+<li><p>Read the Ecxel data file you just created, and use it to define a validator object and to confront the following <em>new</em> demographic data file. Identify any patient violating a rule.</p>
+<a onclick="fetch(&#39;data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,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&#39;).then(res =&gt; res.blob()).then(blob =&gt; {&#10;      const downloadURL = window.URL.createObjectURL(blob);&#10;      const a = document.createElement(&#39;a&#39;);&#10;      document.body.appendChild(a);&#10;      a.href = downloadURL;&#10;      a.download = &#39;new_demo_data.xlsx&#39;; a.click();&#10;      window.URL.revokeObjectURL(downloadURL);&#10;      document.body.removeChild(a);&#10;    });">
+<button class="btn btn-primary"><i class="fa fa-save"></i> Download new demo data</button>
+</a></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="working-with-variables.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
