@@ -438,7 +438,7 @@ ah <- read_excel("./data/hta.xlsx", sheet = "data") %>%
 
 Suppose we want to produce a bar chart to see the number of patients recruited in each region. Here we use function `gf_barh()` from `ggformula` to produce a horizontal barchart:
 
-```{r}
+```{r 2-region}
 library(ggformula)
 gf_barh(~region, data = ah)
 
@@ -448,7 +448,7 @@ gf_barh(~region, data = ah)
 
 We could make the bar chart more readable if regions were sorted by frequency. This is precisely the purpose of `fct_infreq()`:
 
-```{r}
+```{r 2-region-sort}
 gf_barh(~fct_infreq(region), data = ah, ylab = "Regions")
 ```
 
@@ -456,7 +456,7 @@ gf_barh(~fct_infreq(region), data = ah, ylab = "Regions")
 
 To sort them in descending frequency we can use `fct_rev()`, which reverses the order of the levels of a factor. Note how we pipe this function after `fct_infreq(region)`:
 
-```{r}
+```{r 2-region-sort-reverse}
 gf_barh(~fct_infreq(region) %>% fct_rev(), data = ah, ylab = "Regions")
 ```
 
@@ -464,7 +464,7 @@ gf_barh(~fct_infreq(region) %>% fct_rev(), data = ah, ylab = "Regions")
 
 Sometimes we may want to order the levels of a factor by some other variable. For instance, suppose we want to explore the mean age of patients in each region. To this end, we first group by region to compute the mean for each region, ungoup, and finally produce a graphic showing mean ages by region:
 
-```{r}
+```{r 2-region-mage}
 ah %>% 
   group_by(region) %>% 
   summarize(mean_age = mean(age)) %>% 
@@ -477,7 +477,7 @@ ah %>%
 Again, this would be much more readable with regions sorted by the mean age. This can be done by passing variable `mean_age` as second argument to function `fct_reorder()`:
 
 
-```{r}
+```{r 2-region-mage-sort}
 
 ah %>% 
   group_by(region) %>% 
@@ -492,7 +492,7 @@ ah %>%
 
 Changing the levels of a factor may be motivated by several reasons, such as providing better names, or grouping some levels into broader categories. There are several functions available in `forcats` to change the levels of a factor, some of which are very specialized. The most flexible one is `fct_recode()`. Here we use it to rename some of the regions according to official names. Note that new names are equated to old names (in this order), and that levels not mentioned will remain unchanged:
 
-```{r }
+```{r 2-region-recode}
 ah %>% 
   mutate(region = fct_recode(region,
                              "Principado de Asturias" = "Asturias",
@@ -507,7 +507,7 @@ ah %>%
 
 If we need to group levels into broader categories, `str_collapse()` is useful, as shown in the script below. In the second argument to this function, each new (broader) level is equated to a vector of (old) levels. Again, note that levels not mentioned are kept unchanged ("Canarias" still appears in the plot since it is not classified in any of the new broader regions).
 
-```{r fig.height=2.5}
+```{r 2-region-group, fig.height=2.5}
 ah %>% 
   mutate(region = fct_collapse(region,
                              "North" = c("Galicia", "Asturias", "Cantabria", "País Vasco",
@@ -525,7 +525,7 @@ ah %>%
 
 Sometimes we may need to collapse the levels of a factor which are less represented in the data. Suppose this is the distribution of the number of patients recruited in a clinical trial:
 
-```{r fig.height=3}
+```{r 2-hosp, fig.height=3}
 d <- data.frame(center = factor(paste("Hospital",rep(LETTERS[1:8], 
                              times = c(51, 26, 4, 5, 6, 32, 16, 6)))))
 
@@ -537,7 +537,7 @@ d %>%
 
 In such a case, we may want to pool small centers before analysis to avoid a large imbalance of centers.  If none of its optional arguments is used, `fct_lump()` will pool smaller centers ensuring that the frequency of the pool will be lower than the remaining (unpooled) centers:
 
-```{r fig.height=3}
+```{r 2-hosp-pool-1, fig.height=3}
 d %>% 
   gf_barh(~fct_lump(center) %>% fct_infreq() %>% fct_rev(), ylab = "") 
 
@@ -547,20 +547,23 @@ d %>%
 
 Not very useful in this case, since the `Other` class only contains hospital C. However, we can controll how the pooling is done using one of the two optional arguments `n` or `prop`. With `n` we can state how many centers should be kept unpooled. With `prop` we can indicate that centers with a frequency lower than `prop` should be pooled: 
 
-```{r fig.height=2}
+```{r 2-hosp-pool-2, fig.height=2}
 d %>% 
   gf_barh(~fct_lump(center, n = 4) %>% fct_infreq() %>% fct_rev(), ylab = "") 
 
-d %>% 
-  gf_percentsh(~fct_lump(center, prop = .15) %>% fct_infreq() %>% fct_rev(), ylab = "") 
+```
 
+
+```{r 2-hosp-pool-3, fig.height=2}
+d %>% 
+  gf_percentsh(~fct_lump(center, prop = .15) %>% fct_infreq() %>% fct_rev(), ylab = "")
 ```
 
 \
 
 By default, the pool is named "Other", but the optional argument `other_level` allows to specify a different name:
 
-```{r fig.height=2}
+```{r 2-hosp-pool-small, fig.height=2}
 
 d %>% 
   gf_barh(~fct_lump(center, n = 4, other_level = "Small centers") %>% fct_rev(), ylab = "") 
@@ -1109,6 +1112,7 @@ treatments %>%
       self_contained = FALSE)
     ```
 
+\
 
 ```{r 2-exe-3-read-data, echo=FALSE}
     library(readxl)
@@ -1140,8 +1144,9 @@ treatments %>%
       self_contained = FALSE)
     ```
 
+\
 
-    ```{r echo = FALSE, fig.height = 2}
+    ```{r 2-exe4, echo = FALSE, fig.height = 2}
 
     d <- readxl::read_excel("data/doses.xlsx") %>% 
       mutate(dose = as_factor(as.numeric(str_extract(dose, pattern = "[:digit:]+"))))
@@ -1154,7 +1159,7 @@ treatments %>%
 
 1. On the same data, use `fct_collapse()` to define doses as "low" (25 or 50 mg), "medium" (100 mg) or "high" (150 or 200 mg), and produce the following bar chart:
 
-    ```{r echo = FALSE, fig.height = 1.5}
+    ```{r 2-exe-5, echo = FALSE, fig.height = 1.5}
 
     d <- d %>% 
       mutate(dose = fct_collapse(dose,
@@ -1178,7 +1183,9 @@ treatments %>%
     
     ```
 
-    ```{r, echo = FALSE, fig.height = 2}
+\
+
+    ```{r 2-exe6, echo = FALSE, fig.height = 2}
     
     drug_classes %>% 
       mutate(treatment = factor(drug_class,
@@ -1203,6 +1210,7 @@ treatments %>%
     cip <- c("FEGA0720525000", "ROMA1690913000", "PEJI0010503")
     ```
 
+\
 
     ```{r include = FALSE}
     
