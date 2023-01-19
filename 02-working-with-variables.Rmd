@@ -1089,7 +1089,6 @@ treatments %>%
                "IV.  severe limitations")
     ```
 
-    \
 
 1. With the given vector on antecedents of four patients:
 
@@ -1101,8 +1100,6 @@ treatments %>%
     + Use `str_view_all()` to test a regular expression detecting all separators between different antecedents of the same patient(`and`, `,` or `+`).
     + Use `str_replace_all()` to homogenize separators between antecedents using always `+` (e.g., "DM + AHT + pneumonia").
     + From the vector you got in the previous question, can you compute a numeric vector showing the number of antecedents for each patient?
-
-    \
 
 1. Use the button to download a dataset on medical antecedents of 21 patients. After reading the data into dataframe `d`, run the code below to detect all diabetic patients, and then address the following tasks.
 
@@ -1133,8 +1130,6 @@ treatments %>%
     + Copy-paste the previous code and adapt the regexp in `pattern` to detect all patients with arterial hypertension.
     + Do the same to detect all patients with bronchial asthma.
     + Use the previous regexp patterns in `str_detect()` to create three new logical variables in dataframe `d`: `dm`, `aht`, and `ba`, as indicators of diabetes mellitus, arterial hypertension and bronchial asthma, respectively.
-
-    \
 
 1. Download the doses data set, read it, and produce the bar chart shown below.
 
@@ -1169,7 +1164,6 @@ treatments %>%
     ggformula::gf_barh(~dose, data = d)
     ```
 
-   \
 
 1. The following code reads the DISETAHE study data, selects drug class variables, verticalises them, and filters patients that took each drug class. From the resulting dataframe `drug_classes`, reproduce the bar chart shown below (with identical descriptors for drug classes).
 
@@ -1193,7 +1187,6 @@ treatments %>%
       gf_barh(~ treatment %>% fct_infreq() %>% fct_rev(), ylab = "Drug class")
     ```
 
-   \
 
 1. Create a dataframe with the CIP codes provided below, and use a `mutate()` statement to compute additional variables `sex`, `dob` and `age`:
     + `cip` = the CIP code.
@@ -1220,11 +1213,10 @@ treatments %>%
              )
     ```
 
-    \
+
 
 1. Repeat the previous exercise after adding this new CIP to the `cip` vector: "ALCO0580325000".
 
-    \
 
 1. The date of enrollment of a patient in a study was "2016-01-01". In this study, follow-up visits should be conducted at 1, 3 and 6 months and 1 year after enrollment, and yearly thereafter up to 5 years. 
 
@@ -1232,7 +1224,6 @@ treatments %>%
     + And what would they be using natural month intervals?  
     + Is there any saturday or sunday among them?
 
-    \
 
 1. Use `across()` in a `mutate()` statement to recode all yes/no variables in the DISETAHE dataset so that they take values 1 (for yes) or 0 (for no).
 
