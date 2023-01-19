@@ -1089,7 +1089,7 @@ treatments %>%
                "IV.  severe limitations")
     ```
 
-\
+    \
 
 1. With the given vector on antecedents of four patients:
 
@@ -1102,7 +1102,7 @@ treatments %>%
     + Use `str_replace_all()` to homogenize separators between antecedents using always `+` (e.g., "DM + AHT + pneumonia").
     + From the vector you got in the previous question, can you compute a numeric vector showing the number of antecedents for each patient?
 
-\
+    \
 
 1. Use the button to download a dataset on medical antecedents of 21 patients. After reading the data into dataframe `d`, run the code below to detect all diabetic patients, and then address the following tasks.
 
@@ -1200,13 +1200,14 @@ treatments %>%
     + `sex` = a factor with labels "male" and "female".
     + `dob` = the date of birth; this should be a `Date` object.
     + `age` = the patient's age as of 2022-01-01.
-    
+
+    \    
     
     ```{r}
     cip <- c("FEGA0720525000", "ROMA1690913000", "PEJI0010503")
     ```
 
-\
+    \
 
     ```{r include = FALSE}
     
@@ -1219,11 +1220,11 @@ treatments %>%
              )
     ```
 
-\
+    \
 
 1. Repeat the previous exercise after adding this new CIP to the `cip` vector: "ALCO0580325000".
 
-\
+    \
 
 1. The date of enrollment of a patient in a study was "2016-01-01". In this study, follow-up visits should be conducted at 1, 3 and 6 months and 1 year after enrollment, and yearly thereafter up to 5 years. 
 
@@ -1231,7 +1232,7 @@ treatments %>%
     + And what would they be using natural month intervals?  
     + Is there any saturday or sunday among them?
 
-\
+    \
 
 1. Use `across()` in a `mutate()` statement to recode all yes/no variables in the DISETAHE dataset so that they take values 1 (for yes) or 0 (for no).
 
