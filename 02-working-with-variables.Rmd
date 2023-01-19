@@ -1089,6 +1089,8 @@ treatments %>%
                "IV.  severe limitations")
     ```
 
+\
+
 1. With the given vector on antecedents of four patients:
 
     ```{r 2-exe-2}
@@ -1099,7 +1101,9 @@ treatments %>%
     + Use `str_view_all()` to test a regular expression detecting all separators between different antecedents of the same patient(`and`, `,` or `+`).
     + Use `str_replace_all()` to homogenize separators between antecedents using always `+` (e.g., "DM + AHT + pneumonia").
     + From the vector you got in the previous question, can you compute a numeric vector showing the number of antecedents for each patient?
-    
+
+\
+
 1. Use the button to download a dataset on medical antecedents of 21 patients. After reading the data into dataframe `d`, run the code below to detect all diabetic patients, and then address the following tasks.
 
     ```{r 2-antecedents-download, echo = FALSE}
@@ -1112,26 +1116,26 @@ treatments %>%
       self_contained = FALSE)
     ```
 
-\
 
-```{r 2-exe-3-read-data, echo=FALSE}
+    ```{r 2-exe-3-read-data, echo=FALSE}
     library(readxl)
     d <- read_excel("./data/antecedents.xlsx")
+    ```
 
-```
+    \
 
-
-    ```{r 2-exe-3, eval = FALSE}
+    ```{r eval = FALSE}
     d$antecedent %>% 
       str_to_lower() %>% 
       str_view(pattern = "diabet.s|diabetic|dm")
-    
     ```
 
     + Copy-paste the previous code and adapt the regexp in `pattern` to detect all patients with arterial hypertension.
     + Do the same to detect all patients with bronchial asthma.
     + Use the previous regexp patterns in `str_detect()` to create three new logical variables in dataframe `d`: `dm`, `aht`, and `ba`, as indicators of diabetes mellitus, arterial hypertension and bronchial asthma, respectively.
-    
+
+    \
+
 1. Download the doses data set, read it, and produce the bar chart shown below.
 
     ```{r echo = FALSE}
@@ -1144,49 +1148,42 @@ treatments %>%
       self_contained = FALSE)
     ```
 
-\
+    \
 
     ```{r 2-exe4, echo = FALSE, fig.height = 2}
-
     d <- readxl::read_excel("data/doses.xlsx") %>% 
       mutate(dose = as_factor(as.numeric(str_extract(dose, pattern = "[:digit:]+"))))
-    
     ggformula::gf_barh(~dose, data = d)
-    
-
     ```
 
+    \
 
 1. On the same data, use `fct_collapse()` to define doses as "low" (25 or 50 mg), "medium" (100 mg) or "high" (150 or 200 mg), and produce the following bar chart:
 
     ```{r 2-exe-5, echo = FALSE, fig.height = 1.5}
-
     d <- d %>% 
       mutate(dose = fct_collapse(dose,
                                  "low" = c("25", "50"),
                                  "medium" = "100",
                                  "high" = c("150", "200")))
-    
     ggformula::gf_barh(~dose, data = d)
-    
     ```
+
+   \
 
 1. The following code reads the DISETAHE study data, selects drug class variables, verticalises them, and filters patients that took each drug class. From the resulting dataframe `drug_classes`, reproduce the bar chart shown below (with identical descriptors for drug classes).
 
     ```{r}
-    
     drug_classes <- readxl::read_excel("./data/hta.xlsx", sheet = "data") %>% 
       select(pid, bb:other) %>% 
       pivot_longer(bb:other, names_to = "drug_class", values_to = "value") %>% 
       filter(value == 1) %>% 
       arrange(pid, drug_class) 
-    
     ```
 
-\
+    \
 
     ```{r 2-exe6, echo = FALSE, fig.height = 2}
-    
     drug_classes %>% 
       mutate(treatment = factor(drug_class,
                                 levels = c("bb", "diur", "acei", "arb", "cbb", 
@@ -1194,10 +1191,9 @@ treatments %>%
                                 labels = c("Beta blockers", "Diuretics", "ACEI", 
                                            "ARB", "CCB", "Alpha blockers", "Other")))  %>% 
       gf_barh(~ treatment %>% fct_infreq() %>% fct_rev(), ylab = "Drug class")
-    
-    
     ```
 
+   \
 
 1. Create a dataframe with the CIP codes provided below, and use a `mutate()` statement to compute additional variables `sex`, `dob` and `age`:
     + `cip` = the CIP code.
@@ -1223,15 +1219,20 @@ treatments %>%
              )
     ```
 
-    
+\
+
 1. Repeat the previous exercise after adding this new CIP to the `cip` vector: "ALCO0580325000".
+
+\
 
 1. The date of enrollment of a patient in a study was "2016-01-01". In this study, follow-up visits should be conducted at 1, 3 and 6 months and 1 year after enrollment, and yearly thereafter up to 5 years. 
 
     + What should be the dates of follow-up visits assuming 30-day months?  
     + And what would they be using natural month intervals?  
     + Is there any saturday or sunday among them?
-    
+
+\
+
 1. Use `across()` in a `mutate()` statement to recode all yes/no variables in the DISETAHE dataset so that they take values 1 (for yes) or 0 (for no).
 
 ```{r include = FALSE}
